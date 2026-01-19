@@ -1,67 +1,118 @@
-[![Build status](https://dev.azure.com/umutesen/onthecode/_apis/build/status/Material%20Template%20CI)](https://dev.azure.com/umutesen/onthecode/_build/latest?definitionId=11)
+# 18MC Admin
 
- # Angular Material Starter Template
+## Descrição
 
- ![Product Gif](https://github.com/umutesen/angular-material-template/blob/media/material-template-demo.gif)
+O 18MC Admin é um painel de administração desenvolvido em Angular para gerenciar integrantes, regionais, divisões, ações sociais, relatórios e outras funcionalidades relacionadas ao sistema 18MC. Esta aplicação utiliza Angular Material para uma interface moderna e responsiva, com autenticação JWT, interceptores HTTP e um backend simples em Express.js para servir a aplicação em produção.
 
+## Funcionalidades
 
-Angular Material Starter Template is a free template built with Angular  and Angular Material. You can use it out of the box without having to change any file paths. Everything you need to start development on an Angular project is here.
+- **Autenticação**: Login, logout, redefinição de senha e guards de autenticação.
+- **Dashboard**: Painel responsivo com sidebar para navegação.
+- **Gerenciamento de Usuários**: Listagem, criação e edição de usuários.
+- **Gerenciamento de Integrantes**: Listagem, criação e edição de integrantes.
+- **Regionais**: Gerenciamento de regionais.
+- **Divisões**: Gerenciamento de divisões.
+- **Ações Sociais**: Funcionalidades relacionadas a ações sociais.
+- **Relatórios**: Geração e visualização de relatórios.
+- **Pessoas e Regionais**: Gerenciamento de pessoas e regionais.
+- **Gráficos**: Integração com ngx-charts para visualizações.
+- **Interceptors**: Spinner para requisições HTTP, tratamento de erros globais e logging.
+- **Responsivo**: Design totalmente responsivo com Angular Flex Layout.
 
-Angular Material starter template has been built with the official style guide in mind, which means it promotes a clean folder structure and separation of concerns. The material template is fully responsive and contains the fundamental building blocks of a scalable Angular application:
+## Pré-requisitos
 
-Authentication module with login, logout and password reset components
-Responsive Admin dashboard with sidebar
-Account area with change password component
-All Angular Material components
-In addition to Angular, other well-known open-source libraries such as rxjs, moment and ngx-logger are also included.
+- Node.js versão 20.17.0
+- npm versão 10.8.2
+- Angular CLI (instalado globalmente: `npm install -g @angular/cli`)
 
-This application template came as a result of several applications that I have developed over the past few years. 
+## Instalação
 
-Having mostly used Angular Material component, I wanted to create a starter template to save time for greenfield projects. I developed it based on user feedback and it is a powerful Angular admin dashboard, which allows you to build products like admin panels, content management systems (CMS) and customer relationship management (CRM) software.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/18mc-admin.git
+   cd 18mc-admin
+   ```
 
-## Starter Template Features
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-Clean folder structure
-Core module
-Shared module
-Example feature modules
-Lazy-loaded feature modules
-Global error-handling
-Error logging with ngx-logger (logging to browser & remote API)
-HTTP Interceptors to inject JWT-tokens Authentication and role guards (for Role-based access)
-Shows spinner for all HTTP requests
-Angular flex layout
-Browser Support
+## Executando a Aplicação
 
-At present, the template aims to support the last two versions of the following browsers:
+### Desenvolvimento
+Para executar em modo de desenvolvimento:
+```bash
+npm run dev
+```
+Navegue para `http://localhost:4200/`. A aplicação recarregará automaticamente se você alterar qualquer arquivo fonte.
 
-Chrome
-Firefox
-Microsoft Edge
-Safari
-Opera
-
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Produção
+Para executar a aplicação em produção (serve os arquivos buildados):
+```bash
+npm start
+```
+A aplicação estará disponível em `http://localhost:8080` (ou na porta definida pela variável `PORT`).
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para construir a aplicação para produção:
+```bash
+npm run build
+```
+Os artefatos de build serão armazenados no diretório `dist/18mc-admin/`.
 
-## Running unit tests
+Para build de produção com base-href específico:
+```bash
+npm run build-production
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Testes
 
-## Running end-to-end tests
+### Testes Unitários
+Execute os testes unitários via Karma:
+```bash
+npm test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Testes End-to-End
+Para executar testes e2e, primeiro adicione um pacote que implemente capacidades de teste e2e, então execute:
+```bash
+ng e2e
+```
 
-## Further help
+## Lint
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Para verificar o código com ESLint:
+```bash
+npm run lint
+```
+
+## Implantação
+
+Esta aplicação está configurada para implantação no Heroku. O script `heroku-postbuild` constrói a aplicação automaticamente após o push.
+
+Para outras plataformas, construa a aplicação e sirva os arquivos em `dist/18mc-admin/` com um servidor web.
+
+## Estrutura do Projeto
+
+- `src/app/core/`: Módulos core, guards, interceptors, models e services.
+- `src/app/features/`: Módulos de funcionalidades (auth, dashboard, users, etc.).
+- `src/app/shared/`: Módulos compartilhados, diretivas, pipes, etc.
+- `server.js`: Servidor Express simples para produção.
+
+## Contribuição
+
+1. Fork o projeto.
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
+3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`).
+4. Push para a branch (`git push origin feature/nova-feature`).
+5. Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+## Ajuda Adicional
+
+Para mais ajuda com o Angular CLI, use `ng help` ou consulte a [documentação do Angular CLI](https://angular.io/cli).
