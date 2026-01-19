@@ -1,0 +1,96 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="98%">
+        <h2>Relatórios por divisão</h2>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <mat-form-field [fxFlex]="33">
+              <mat-select
+                placeholder="Selecione o comando"
+                (selectionChange)="getCommands(); selectedRegionalId = 0; data = []"
+                [(ngModel)]="selectedCommandId"
+              >
+                <mat-option *ngFor="let command of commands" [value]="command.id">
+                  {{ command.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field [fxFlex]="33">
+                <mat-select placeholder="Selecione a regional" (selectionChange)="regionalSelecionChanged()"
+                    [(ngModel)]="selectedRegionalId">
+                    <mat-option *ngFor="let regional of regionals" [value]="regional.id">
+                        {{ regional.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field [fxFlex]="33">
+                <input matInput [matDatepicker]="startDate" placeholder="Data Inicial" [(ngModel)]="selectedStartDate"
+                    (click)="startDate.open()" (dateChange)="getReport()" />
+                <mat-datepicker-toggle matSuffix [for]="startDate"> </mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field [fxFlex]="33">
+                <input matInput [matDatepicker]="endDate" placeholder="Data Final" [(ngModel)]="selectedEndDate"
+                    (click)="endDate.open()" (dateChange)="getReport()" />
+                <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
+                <mat-datepicker #endDate></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-accordion class="headers-align" multi>
+            <mat-expansion-panel *ngFor="let item of data">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{ item.divisionName }}</mat-panel-title>
+                    <mat-panel-description>Total: {{ item.socialActions.internal.length +
+                        item.socialActions.external.length }}</mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Ações Internas</mat-panel-title>
+                        <mat-panel-description>Total: {{ item.socialActions.internal.length }}</mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-expansion-panel *ngFor="let socialAction of item.socialActions.internal">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>{{ socialAction.name }}</mat-panel-title>
+                            <mat-panel-description>{{ socialAction.date | date: 'dd/MM/yyyy'
+                                }}</mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-expansion-panel *ngFor="let participant of socialAction.participants" disabled>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{ participant.shortName }}</mat-panel-title>
+                                <mat-panel-description>{{ participant.hierarchyLevel }}</mat-panel-description>
+                            </mat-expansion-panel-header>
+                        </mat-expansion-panel>
+                    </mat-expansion-panel>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Ações Externas</mat-panel-title>
+                        <mat-panel-description>Total: {{ item.socialActions.external.length }}</mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-expansion-panel *ngFor="let socialAction of item.socialActions.external">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>{{ socialAction.name }}</mat-panel-title>
+                            <mat-panel-description>{{ socialAction.date | date: 'dd/MM/yyyy'
+                                }}</mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-expansion-panel *ngFor="let participant of socialAction.participants" disabled>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{ participant.shortName }}</mat-panel-title>
+                                <mat-panel-description>{{ participant.hierarchyLevel }}</mat-panel-description>
+                            </mat-expansion-panel-header>
+                        </mat-expansion-panel>
+                    </mat-expansion-panel>
+                </mat-expansion-panel>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<mat-toolbar>
+  {{ class.id == null ? "Cadastrar Modalidade" : "Editar Modalidade" }}
+</mat-toolbar>
+
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <form [formGroup]="formGroup" (ngSubmit)="saveStudent()">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+        <mat-form-field [fxFlex]="30">
+          <input
+            matInput
+            placeholder="Nome"
+            type="text"
+            formControlName="name"
+            [(ngModel)]="class.name"
+            maxlength="255"
+            required
+          />
+          <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div style="margin-top: 15px; margin-bottom: 15px">
+        <button mat-flat-button color="primary">
+          <mat-icon>save</mat-icon>
+          Salvar
+        </button>
+        <button mat-flat-button type="button" [routerLink]="['/classes']">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-card>
+      <mat-card-content>
+        <h2>
+          Regionais
+          <button mat-mini-fab color="primary" routerLink="register" style="margin-left: 5px">
+            <mat-icon>add</mat-icon>
+          </button>
+        </h2>
+        <div class="container" fxLayout="row" fxLayoutAlign="center none">
+          <div fxFlex="100%">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+              <mat-form-field [fxFlex]="25">
+                  <mat-label>Comando</mat-label>
+                  <mat-select [(ngModel)]="selectedCommandId" (selectionChange)="getRegionals()">
+                    <mat-option *ngFor="let command of commands" [value]="command.id">{{ command.name }}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="getRegionals()">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th id="actions" mat-header-cell *matHeaderCellDef class="w120">Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button matTooltip="Editar" [routerLink]="['edit', element.id]">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons (page)="getRegionals()"></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

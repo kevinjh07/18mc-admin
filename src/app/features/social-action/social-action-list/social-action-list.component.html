@@ -1,0 +1,111 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-card>
+      <mat-card-content>
+        <h2>
+          Ações Sociais
+          <button mat-mini-fab color="primary" routerLink="register" style="margin-left: 5px">
+            <mat-icon>add</mat-icon>
+          </button>
+        </h2>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+          <mat-form-field [fxFlex]="33">
+            <mat-select
+              placeholder="Selecione o comando"
+              (selectionChange)="getCommands(); selectedRegionalId = 0; selectedDivisionId = 0"
+              [(ngModel)]="selectedCommandId"
+            >
+              <mat-option *ngFor="let command of commands" [value]="command.id">
+                {{ command.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [fxFlex]="33">
+            <mat-select placeholder="Selecione a regional" (selectionChange)="getDivisions();"
+              [(ngModel)]="selectedRegionalId">
+              <mat-option *ngFor="let regional of regionals" [value]="regional.id">
+                {{ regional.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [fxFlex]="33">
+            <mat-select placeholder="Selecione a divisão" (selectionChange)="getSocialActions()"
+              [(ngModel)]="selectedDivisionId">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let division of divisions" [value]="division.id">
+                {{ division.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="getSocialActions()">
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+            <td mat-cell *matCellDef="let element">{{ element.date | date : "dd/MM/yyyy" }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actionType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+            <td mat-cell *matCellDef="let element">{{ element.actionType === "internal" ? "Interna" : element.actionType
+              === "external" ? "Externa" : "Arrecadação"}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th id="actions" mat-header-cell *matHeaderCellDef class="w120">Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button matTooltip="Editar" [routerLink]="['edit', element.id]">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Participantes" (click)="showParticipatsDialog(element.id)">
+                <mat-icon>groups</mat-icon>
+              </button>
+              <a href="https://forms.gle/vmBXVxTHzmkj9bme8" target="_blank">
+                <button mat-icon-button matTooltip="Ficha de ação social">
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
+              </a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions-mobile">
+            <th id="actions" mat-header-cell *matHeaderCellDef class="w120">Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button [matMenuTriggerFor]="userMenu">
+                <mat-icon>more_vert</mat-icon>
+                <span fxShow fxHide.xs> </span>
+              </button>
+              <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+                <a mat-menu-item [routerLink]="['edit', element.id]">
+                  <span>Editar</span>
+                </a>
+                <button mat-menu-item (click)="showParticipatsDialog(element.id)">
+                  <span>Visualizar Participantes</span>
+                </button>
+                <a mat-menu-item
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfT3eqy9pJ74JWucMmKZ68jS7ErQki6eX01-b5soS4qFsJ0lg/viewform"
+                  target="_blank">
+                  <span>Ficha de ação</span>
+                </a>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+          (page)="getSocialActions()"></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

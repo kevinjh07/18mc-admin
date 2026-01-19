@@ -1,0 +1,101 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="97%">
+    <h2>Ações Sociais - Divisão</h2>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+      <mat-form-field [fxFlex]="33">
+        <mat-select
+          placeholder="Selecione o comando"
+          (selectionChange)="getCommands(); selectedRegionalId = 0; socialActions = null;"
+          [(ngModel)]="selectedCommandId"
+        >
+          <mat-option *ngFor="let command of commands" [value]="command.id">
+            {{ command.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field [fxFlex]="33">
+        <mat-select placeholder="Selecione a regional" (selectionChange)="regionalSelecionChanged()"
+          [(ngModel)]="selectedRegionalId">
+          <mat-option *ngFor="let regional of regionals" [value]="regional.id">
+            {{ regional.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field [fxFlex]="33">
+        <input matInput [matDatepicker]="startDate" placeholder="Data Inicial" [(ngModel)]="selectedStartDate"
+          (click)="startDate.open()"
+          (dateChange)="getSocialActionCountByDateRange(); getSocialActionsByPersonAndDivision()" />
+        <mat-datepicker-toggle matSuffix [for]="startDate"> </mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field [fxFlex]="33">
+        <input matInput [matDatepicker]="endDate" placeholder="Data Final" [(ngModel)]="selectedEndDate"
+          (click)="endDate.open()"
+          (dateChange)="getSocialActionCountByDateRange(); getSocialActionsByPersonAndDivision()" />
+        <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab label="Total de ações">
+        <div *ngIf="socialActions">
+          <ngx-charts-bar-horizontal [results]="socialActions" [scheme]="'vivid'" [yAxis]="true"
+            [showXAxisLabel]="true" [showDataLabel]="true" [roundDomains]="true">
+          </ngx-charts-bar-horizontal>
+          <h4 style="padding-left: 1%;">Total: {{totalSocialActions}} </h4>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Ações por tipo">
+        <div *ngIf="socialActionsByType">
+          <div class="tipo-acao-container">
+            <div class="tipo-acao-title">Tipo de ação</div>
+            <div class="tipo-acao-item">
+              <div class="tipo-acao-color-interna"></div>
+              <span>Interna</span>
+            </div>
+            <div class="tipo-acao-item">
+              <div class="tipo-acao-color-externa"></div>
+              <span>Externa</span>
+            </div>
+            <div class="tipo-acao-item">
+              <div class="tipo-acao-color-arrecadacao"></div>
+              <span>Arrecadação</span>
+            </div>
+          </div>
+
+          <ngx-charts-bar-horizontal-2d [results]="socialActionsByType" [showDataLabel]="true" [roundDomains]="true"
+            [scheme]="'vivid'" [yAxis]="true" [showYAxisLabel]="false">
+          </ngx-charts-bar-horizontal-2d>
+
+          <h4 style="padding-left: 1%;">Total: {{totalSocialActionsByType}} </h4>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="97%">
+    <h2>Ações Sociais - Integrante</h2>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+      <mat-form-field [fxFlex]="33">
+        <mat-select [placeholder]="selectedRegionalId ? 'Selecione a divisão' : 'Selecione a regional'"
+          (selectionChange)="getSocialActionsByPersonAndDivision()" [(ngModel)]="selectedDivisionId">
+          <mat-option *ngFor="let division of divisions" [value]="division.id">
+            {{ division.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <ngx-charts-bar-horizontal *ngIf="socialActionsByPerson" [results]="socialActionsByPerson" [yAxis]="true"
+      [showXAxisLabel]="true" [showYAxisLabel]="true" [showDataLabel]="true" [roundDomains]="true" [scheme]="'vivid'">
+    </ngx-charts-bar-horizontal>
+  </div>
+</div>

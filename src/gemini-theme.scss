@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+// Paleta de cores baseada no tema Gemini
+$gemini-primary: mat.define-palette(mat.$blue-grey-palette, 900);
+$gemini-accent: mat.define-palette(mat.$blue-palette, A200, A100, A400);
+$gemini-warn: mat.define-palette(mat.$red-palette);
+
+$gemini-theme: mat.define-dark-theme((
+  color: (
+    primary: $gemini-primary,
+    accent: $gemini-accent,
+    warn: $gemini-warn
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Aplica o tema a todos os componentes do Angular Material
+@include mat.all-component-themes($gemini-theme);
+
+// Definição de variáveis CSS para personalização extra
+:root {
+  --gemini-bg: #121417;
+  --gemini-surface: #1a1c1e;
+  --gemini-text-primary: #e3e3e3;
+  --gemini-text-secondary: #b0b3b8;
+  --gemini-border: rgba(255, 255, 255, 0.1);
+}
+
+// Aplicação global do tema Gemini
+.gemini-theme {
+  background-color: var(--gemini-bg);
+  color: var(--gemini-text-primary);
+
+  a {
+    color: var(--gemini-text-secondary);
+  }
+
+  .mat-mdc-card {
+    background-color: var(--gemini-surface);
+    border: 1px solid var(--gemini-border);
+  }
+}

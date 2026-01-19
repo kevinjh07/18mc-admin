@@ -1,0 +1,63 @@
+<div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
+  <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
+    <mat-card>
+      <img
+        src="assets/favicon/android-icon-192x192.png"
+        style="margin-left: auto; margin-right: auto; display: block; margin-bottom: 5%"
+      />
+      <mat-card-title style="display: flex; justify-content: center; align-items: center"
+        >18 MC Admin</mat-card-title
+      >
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input
+            id="emailInput"
+            matInput
+            placeholder="Email"
+            formControlName="email"
+            autocomplete="email"
+            type="email"
+          />
+          <mat-error id="invalidEmailError" *ngIf="loginForm.controls['email'].hasError('email')">
+            Digite um endereço de e-mail válido
+          </mat-error>
+          <mat-error id="requiredEmailError" *ngIf="loginForm.controls['email'].hasError('required')">
+            E-mail é <strong>obrigatório</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input
+            id="passwordInput"
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            placeholder="Senha"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+            <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error id="requiredPasswordError" *ngIf="loginForm.controls['password'].hasError('required')">
+            Senha é <strong>obrigatório</strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="full-width">
+          <mat-slide-toggle formControlName="rememberMe">Lembrar meu endereço de e-mail</mat-slide-toggle>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="login-actions">
+        <button
+          mat-raised-button
+          id="login"
+          color="primary"
+          [disabled]="loginForm.invalid || loading"
+          (click)="login()"
+        >
+          Login
+        </button>
+        <button mat-button id="resetPassword" (click)="resetPassword()" type="button">Esqueci minha senha</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  </form>
+</div>

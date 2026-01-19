@@ -1,0 +1,19 @@
+.toolbar {
+  position: relative;
+  text-align: center;
+}
+
+.toolbar button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}

@@ -1,0 +1,92 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-card>
+      <mat-card-content>
+        <h2>
+          Integrantes
+          <button mat-mini-fab color="primary" routerLink="register" style="margin-left: 5px">
+            <mat-icon>add</mat-icon>
+          </button>
+        </h2>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+          <mat-form-field [fxFlex]="33">
+            <mat-select
+              placeholder="Selecione o comando"
+              (selectionChange)="getCommands(); selectedRegionalId = 0"
+              [(ngModel)]="selectedCommandId"
+            >
+              <mat-option *ngFor="let command of commands" [value]="command.id">
+                {{ command.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [fxFlex]="33">
+            <mat-select
+              placeholder="Selecione a regional"
+              (selectionChange)="getDivisions(); selectedDivisionId = 0"
+              [(ngModel)]="selectedRegionalId"
+            >
+              <mat-option *ngFor="let regional of regionals" [value]="regional.id">
+                {{ regional.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field [fxFlex]="33">
+            <mat-select
+              placeholder="Selecione a divisão"
+              (selectionChange)="getPersons()"
+              [(ngModel)]="selectedDivisionId"
+            >
+              <mat-option *ngFor="let division of divisions" [value]="division.id">
+                {{ division.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="getPersons()">
+          <ng-container matColumnDef="shortName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome Colete</th>
+            <td class="ellipsis" mat-cell *matCellDef="let element">{{ element.shortName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="hierarchyLevel">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Grau Hierárquico</th>
+            <td mat-cell *matCellDef="let element">{{ element.hierarchyLevel }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Situação</th>
+            <td mat-cell *matCellDef="let element">{{ element.isActive ? 'Ativo' : 'Inativo' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="paymentStatus">
+            <th mat-header-cell *matHeaderCellDef>Pagamento</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-icon [style.color]="element.lastPaymentOnTime ? 'green' : 'red'">
+                {{ element.lastPaymentOnTime ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th id="actions" mat-header-cell *matHeaderCellDef class="w120">Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button matTooltip="Editar" [routerLink]="['edit', element.id]">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons (page)="getPersons()"></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

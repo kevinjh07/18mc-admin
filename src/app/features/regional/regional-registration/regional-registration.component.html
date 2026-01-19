@@ -1,0 +1,44 @@
+<mat-toolbar>
+  {{ regional.id == null ? "Cadastrar Regional" : "Editar Regional" }}
+</mat-toolbar>
+
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+        <mat-form-field [fxFlex]="25">
+          <input
+            matInput
+            placeholder="Nome"
+            type="text"
+            formControlName="name"
+            [(ngModel)]="regional.name"
+            maxlength="150"
+            required
+          />
+          <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+        <mat-form-field [fxFlex]="25">
+            <mat-label>Comando</mat-label>
+            <mat-select formControlName="commandId" [(ngModel)]="regional.commandId" required>
+              <mat-option *ngFor="let command of commands" [value]="command.id">{{ command.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.controls['commandId'].invalid">Campo obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div style="margin-top: 15px; margin-bottom: 15px">
+        <button mat-flat-button color="primary">
+          <mat-icon>save</mat-icon>
+          Salvar
+        </button>
+        <button mat-flat-button type="button" [routerLink]="['/regional']">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

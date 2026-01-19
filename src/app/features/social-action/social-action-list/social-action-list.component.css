@@ -1,0 +1,11 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+a.mat-list-item.active {
+  background: rgba(0, 0, 0, 0.04);
+}
