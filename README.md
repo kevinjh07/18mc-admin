@@ -29,7 +29,7 @@ O 18MC Admin é um painel de administração desenvolvido em Angular para gerenc
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/18mc-admin.git
+   git clone https://github.com/kevinjh07/18mc-admin.git
    cd 18mc-admin
    ```
 
