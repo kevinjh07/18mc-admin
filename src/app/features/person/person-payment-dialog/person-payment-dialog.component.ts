@@ -86,7 +86,8 @@ export class PersonPaymentDialogComponent implements OnInit {
         error: (e) => {
           this.blockUI.stop();
           this.logger.error(e);
-          this.notificationService.openSnackBar('Erro ao salvar pagamento');
+          const message = e?.status === 409 ? e?.error.error : 'Erro ao salvar pagamento';
+          this.notificationService.openSnackBar(message);
         }
       });
     }
