@@ -30,7 +30,8 @@
               "src/styles.css",
               "src/gemini-theme.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["moment", "rfdc"]
           },
           "configurations": {
             "production": {
