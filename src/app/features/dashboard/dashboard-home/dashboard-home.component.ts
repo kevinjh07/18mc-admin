@@ -5,16 +5,13 @@ import { ChartService } from "src/app/core/services/chart/chart.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 import { Regional } from "src/app/core/models/regional";
-import * as moment from "moment";
+import { subMonths, format } from "date-fns";
 import { FilterService } from "src/app/core/services/filter/filter.service";
-import {
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-} from "@angular/material-moment-adapter";
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
+  NativeDateAdapter,
 } from "@angular/material/core";
 import { Division } from "src/app/core/models/division";
 import { DivisionService } from "src/app/core/services/division/division.service";
@@ -25,13 +22,13 @@ import { CommandService } from "src/app/core/services/command/command.service";
 
 export const DEFAULT_FORMATS = {
   parse: {
-    dateInput: "DD/MM/YYYY",
+    dateInput: "dd/MM/yyyy",
   },
   display: {
-    dateInput: "DD/MM/YYYY",
-    monthYearLabel: "MMM YYYY",
+    dateInput: "dd/MM/yyyy",
+    monthYearLabel: "MMM yyyy",
     dateA11yLabel: "LL",
-    monthYearA11yLabel: "MMMM YYYY",
+    monthYearA11yLabel: "MMMM yyyy",
   },
 };
 
@@ -42,8 +39,8 @@ export const DEFAULT_FORMATS = {
   providers: [
     {
       provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+      useClass: NativeDateAdapter,
+      deps: [MAT_DATE_LOCALE],
     },
     { provide: MAT_DATE_FORMATS, useValue: DEFAULT_FORMATS },
     { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },
@@ -85,8 +82,8 @@ export class DashboardHomeComponent implements OnInit {
   ngAfterViewInit(): void {
     this.getCommands();
 
-    this.selectedStartDate = moment().subtract(6, "months");
-    this.selectedEndDate = moment();
+    this.selectedStartDate = subMonths(new Date(), 6);
+    this.selectedEndDate = new Date();
 
     const filter = this.filterService.getFilter();
     if (filter.dashboardCommandlId) {
@@ -151,8 +148,8 @@ export class DashboardHomeComponent implements OnInit {
 
     this.chartService
       .getSocialActionCountByDateRange(
-        this.selectedStartDate.format("YYYY-MM-DD"),
-        this.selectedEndDate.format("YYYY-MM-DD"),
+        format(this.selectedStartDate, "yyyy-MM-dd"),
+        format(this.selectedEndDate, "yyyy-MM-dd"),
         this.selectedRegionalId
       )
       .subscribe({
@@ -184,8 +181,8 @@ export class DashboardHomeComponent implements OnInit {
 
     this.chartService
       .getSocialActionByTypeCountByDateRange(
-        this.selectedStartDate.format("YYYY-MM-DD"),
-        this.selectedEndDate.format("YYYY-MM-DD"),
+        format(this.selectedStartDate, "yyyy-MM-dd"),
+        format(this.selectedEndDate, "yyyy-MM-dd"),
         this.selectedRegionalId
       )
       .subscribe({
@@ -221,8 +218,8 @@ export class DashboardHomeComponent implements OnInit {
 
     this.chartService
       .getSocialActionsByPersonAndDivision(
-        this.selectedStartDate.format("YYYY-MM-DD"),
-        this.selectedEndDate.format("YYYY-MM-DD"),
+        format(this.selectedStartDate, "yyyy-MM-dd"),
+        format(this.selectedEndDate, "yyyy-MM-dd"),
         this.selectedDivisionId
       )
       .subscribe({

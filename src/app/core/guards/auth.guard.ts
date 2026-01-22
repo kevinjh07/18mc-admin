@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router, CanActivate } from "@angular/router";
-import * as moment from "moment";
+import { isBefore } from "date-fns";
 
 import { AuthenticationService } from "../services/auth.service";
 import { NotificationService } from "../services/notification.service";
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     const user = this.authService.getCurrentUser();
 
     if (user && user.exp) {
-      if (moment().isBefore(moment(user.exp * 1000))) {
+      if (isBefore(new Date(), new Date(user.exp * 1000))) {
         return true;
       } else {
         this.notificationService.openSnackBar("Sua sessão expirou");

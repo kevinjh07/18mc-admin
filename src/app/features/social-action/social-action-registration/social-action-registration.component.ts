@@ -8,8 +8,7 @@ import { SocialAction } from "src/app/core/models/socialAction";
 import { DivisionService } from "src/app/core/services/division/division.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { SocialActionService } from "src/app/core/services/social-action/social-action.service";
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from "@angular/material/core";
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, NativeDateAdapter } from "@angular/material/core";
 import { DualListComponent } from "angular-dual-listbox";
 import { PersonService } from "src/app/core/services/person/person.service";
 import { Person } from "src/app/core/models/person";
@@ -19,13 +18,13 @@ import { Title } from "@angular/platform-browser";
 
 export const DEFAULT_FORMATS = {
   parse: {
-    dateInput: "DD/MM/YYYY",
+    dateInput: "dd/MM/yyyy",
   },
   display: {
-    dateInput: "DD/MM/YYYY",
-    monthYearLabel: "MMM YYYY",
+    dateInput: "dd/MM/yyyy",
+    monthYearLabel: "MMM yyyy",
     dateA11yLabel: "LL",
-    monthYearA11yLabel: "MMMM YYYY",
+    monthYearA11yLabel: "MMMM yyyy",
   },
 };
 
@@ -36,8 +35,8 @@ export const DEFAULT_FORMATS = {
   providers: [
     {
       provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+      useClass: NativeDateAdapter,
+      deps: [MAT_DATE_LOCALE],
     },
     { provide: MAT_DATE_FORMATS, useValue: DEFAULT_FORMATS },
     { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },

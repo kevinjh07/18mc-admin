@@ -11,7 +11,6 @@ import { LocalDatePipe } from "./pipes/local-date.pipe";
 import { YesNoPipe } from "./pipes/yes-no.pipe";
 import { LayoutComponent } from "./layout/layout.component";
 import { JoinPipe } from "./pipes/join.pipe";
-import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { RoleDirective } from "./directives/role.directive";
 
 @NgModule({
@@ -37,7 +36,6 @@ import { RoleDirective } from "./directives/role.directive";
     LocalDatePipe,
     YesNoPipe,
     JoinPipe,
-    NgxChartsModule,
   ],
 })
 export class SharedModule {}

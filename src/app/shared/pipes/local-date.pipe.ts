@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 
 @Pipe({
   name: 'localDate'
@@ -10,7 +10,12 @@ export class LocalDatePipe implements PipeTransform {
     if (!value || !args) {
       return '';
     }
-    return moment.utc(value).local().format(args);
+    const dateFnsFormat = args
+      .replace(/DD/g, 'dd')
+      .replace(/YYYY/g, 'yyyy');
+      
+    const localDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000));
+    return format(localDate, dateFnsFormat);
   }
 
 }

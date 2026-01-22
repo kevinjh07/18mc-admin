@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from "@angular/material/core";
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, NativeDateAdapter } from "@angular/material/core";
 import { Title } from "@angular/platform-browser";
-import * as moment from "moment";
+import { subMonths, format } from "date-fns";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NGXLogger } from "ngx-logger";
 import { Regional } from "src/app/core/models/regional";
@@ -14,13 +13,13 @@ import { ReportService } from "src/app/core/services/report/report.service";
 
 export const DEFAULT_FORMATS = {
   parse: {
-    dateInput: "DD/MM/YYYY",
+    dateInput: "dd/MM/yyyy",
   },
   display: {
-    dateInput: "DD/MM/YYYY",
-    monthYearLabel: "MMM YYYY",
+    dateInput: "dd/MM/yyyy",
+    monthYearLabel: "MMM yyyy",
     dateA11yLabel: "LL",
-    monthYearA11yLabel: "MMMM YYYY",
+    monthYearA11yLabel: "MMMM yyyy",
   },
 };
 
@@ -32,8 +31,8 @@ export const DEFAULT_FORMATS = {
   providers: [
     {
       provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+      useClass: NativeDateAdapter,
+      deps: [MAT_DATE_LOCALE],
     },
     { provide: MAT_DATE_FORMATS, useValue: DEFAULT_FORMATS },
     { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },
@@ -67,8 +66,8 @@ export class ReportListComponent implements OnInit {
   ngAfterViewInit(): void {
     this.getCommands();
 
-    this.selectedStartDate = moment().subtract(6, "months");
-    this.selectedEndDate = moment();
+    this.selectedStartDate = subMonths(new Date(), 6);
+    this.selectedEndDate = new Date();
 
     const filter = this.filterService.getFilter();
     if (filter.dashboardCommandlId) {
@@ -109,8 +108,8 @@ export class ReportListComponent implements OnInit {
     this.reportService
       .getDivisionReport(
         this.selectedRegionalId,
-        this.selectedStartDate.format("YYYY-MM-DD"),
-        this.selectedEndDate.format("YYYY-MM-DD")
+        format(this.selectedStartDate, "yyyy-MM-dd"),
+        format(this.selectedEndDate, "yyyy-MM-dd")
       )
       .subscribe({
         next: (response: any) => {
