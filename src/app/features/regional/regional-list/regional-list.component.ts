@@ -33,7 +33,7 @@ export class RegionalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Regionais - 18 MC Admin");
+    this.titleService.setTitle("Regionais - 18 Admin");
   }
 
   ngAfterViewInit(): void {

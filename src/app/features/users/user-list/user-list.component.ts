@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.titleService.setTitle("Usuários - 18 MC Admin");
+    this.titleService.setTitle("Usuários - 18 Admin");
     this.logger.log("Users loaded");
   }
 

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.titleService.setTitle("Login");
+    this.titleService.setTitle("Login - 18 Admin");
     this.authenticationService.logout();
     this.createForm();
   }

@@ -75,7 +75,7 @@ export class SocialActionRegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Ações Sociais - 18 MC Admin");
+    this.titleService.setTitle("Ações Sociais - 18 Admin");
 
     this.formGroup = this.formBuilder.group({
       title: ["", [Validators.required, Validators.maxLength(150)]],

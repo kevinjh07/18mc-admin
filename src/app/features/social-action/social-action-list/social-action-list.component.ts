@@ -54,7 +54,7 @@ export class SocialActionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.observeScreenSize();
-    this.titleService.setTitle("Ações Sociais - 18 MC Admin");
+    this.titleService.setTitle("Ações Sociais - 18 Admin");
   }
 
   observeScreenSize(): void {

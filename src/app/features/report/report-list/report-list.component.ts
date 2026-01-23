@@ -60,7 +60,7 @@ export class ReportListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Relatório - 18 MC Admin");
+    this.titleService.setTitle("Relatório - 18 Admin");
   }
 
   ngAfterViewInit(): void {

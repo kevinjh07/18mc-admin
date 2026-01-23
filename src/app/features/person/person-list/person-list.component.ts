@@ -47,7 +47,7 @@ export class PersonListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Integrantes - 18 MC Admin");
+    this.titleService.setTitle("Integrantes - 18 Admin");
   }
 
   ngAfterViewInit(): void {

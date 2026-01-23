@@ -76,7 +76,7 @@ export class DashboardHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.titleService.setTitle("Dashboard - 18 MC Admin");
+    this.titleService.setTitle("Dashboard - 18 Admin");
   }
 
   ngAfterViewInit(): void {

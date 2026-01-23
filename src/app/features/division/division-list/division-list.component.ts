@@ -41,7 +41,7 @@ export class DivisionListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Divisões - 18 MC Admin");
+    this.titleService.setTitle("Divisões - 18 Admin");
   }
 
   ngAfterViewInit(): void {
