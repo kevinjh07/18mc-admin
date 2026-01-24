@@ -11,7 +11,7 @@
         <div class="container" fxLayout="row" fxLayoutAlign="center none">
           <div fxFlex="100%">
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-              <mat-form-field [fxFlex]="25">
+              <mat-form-field [fxFlex]="33">
                   <mat-label>Comando</mat-label>
                   <mat-select [(ngModel)]="selectedCommandId" (selectionChange)="getRegionals()">
                     <mat-option *ngFor="let command of commands" [value]="command.id">{{ command.name }}</mat-option>
