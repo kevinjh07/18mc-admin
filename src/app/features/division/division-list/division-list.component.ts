@@ -83,6 +83,10 @@ export class DivisionListComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.filterService.updateFilter({ divisionListCommandId: this.selectedCommandId });
 
     this.blockUI.start("Aguarde...");

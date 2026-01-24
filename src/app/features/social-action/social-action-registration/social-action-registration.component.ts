@@ -16,6 +16,7 @@ import { Regional } from "src/app/core/models/regional";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 import { Title } from "@angular/platform-browser";
 import { EventType } from "src/app/core/models/event-type";
+import { CommandService } from "src/app/core/services/command/command.service";
 
 export const DEFAULT_FORMATS = {
   parse: {
@@ -47,10 +48,12 @@ export class SocialActionRegistrationComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   public formGroup: FormGroup;
   socialAction = new Event();
+  commands: any = [];
   regionals: Regional[] = [];
   divisions: Division[] = [];
   availablePerson: Person[] = [];
   selectedPerson: Person[] = [];
+  selectedCommandId: number;
 
   format = {
     add: "Adicionar",
@@ -69,6 +72,7 @@ export class SocialActionRegistrationComponent implements OnInit {
     private logger: NGXLogger,
     private activatedRoute: ActivatedRoute,
     private socialActionService: EventService,
+    private commandService: CommandService,
     private regionalService: RegionalService,
     private divisionService: DivisionService,
     private personService: PersonService,
@@ -82,6 +86,7 @@ export class SocialActionRegistrationComponent implements OnInit {
       title: ["", [Validators.required, Validators.maxLength(150)]],
       date: ["", [Validators.required, Validators.maxLength(50)]],
       description: ["", [Validators.required, Validators.maxLength(1000)]],
+      commandId: ["", [Validators.required]],
       regionalId: ["", [Validators.required]],
       divisionId: ["", [Validators.required]],
       actionType: ["", [Validators.required]],
@@ -95,7 +100,7 @@ export class SocialActionRegistrationComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.getRegionals();
+    this.getCommands();
   }
 
   get(id: number) {
@@ -103,6 +108,7 @@ export class SocialActionRegistrationComponent implements OnInit {
       next: (response: any) => {
         this.blockUI.stop();
         this.socialAction = response;
+        this.selectedCommandId = response.Division.Regional.commandId;
         this.socialAction.regionalId = response.Division.Regional.id;
         this.socialAction.divisionId = response.Division.id;
         this.selectedPerson = response.People || [];
@@ -161,9 +167,27 @@ export class SocialActionRegistrationComponent implements OnInit {
     });
   }
 
+  getCommands() {
+    this.commandService.getAll().subscribe({
+      next: (response: any) => {
+        this.commands = response;
+        this.regionals = [];
+        this.getRegionals();
+      },
+      error: (e) => {
+        this.logger.error(e);
+        this.notificationService.openSnackBar("Erro ao obter lista de comandos, tente novamente");
+      },
+    });
+  }
+
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 30, null).subscribe({
+    this.regionalService.getAll(1, 30, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];

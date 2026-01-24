@@ -114,10 +114,14 @@ export class SocialActionListComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.filterService.updateFilter({ socialActionListCommandId: this.selectedCommandId });
 
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 100, null).subscribe({
+    this.regionalService.getAll(1, 100, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];

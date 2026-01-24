@@ -41,6 +41,21 @@
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
+              <mat-select
+                formControlName="commandId"
+                placeholder="Selecione o comando"
+                (selectionChange)="getRegionals(); socialAction.regionalId = 0; socialAction.divisionId = 0"
+                [(ngModel)]="selectedCommandId"
+              >
+                <mat-option *ngFor="let command of commands" [value]="command.id">
+                  {{ command.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+            <mat-form-field [fxFlex]="50">
               <mat-label>Regional</mat-label>
               <mat-select
                 formControlName="regionalId"
