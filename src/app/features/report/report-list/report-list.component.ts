@@ -81,10 +81,14 @@ export class ReportListComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.filterService.updateFilter({ dashboardCommandlId: this.selectedCommandId });
 
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 30, null).subscribe({
+    this.regionalService.getAll(1, 100, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];

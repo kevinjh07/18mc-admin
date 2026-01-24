@@ -103,12 +103,16 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.filterService.updateFilter({
       dashboardCommandlId: this.selectedCommandId,
     });
 
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 30, null).subscribe({
+    this.regionalService.getAll(1, 100, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];
@@ -272,6 +276,7 @@ export class DashboardHomeComponent implements OnInit {
       next: (response: any) => {
         this.commands = response;
         this.regionals = [];
+        this.divisions = [];
         this.getRegionals();
       },
       error: (e) => {
