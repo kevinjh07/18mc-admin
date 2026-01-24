@@ -86,7 +86,12 @@ export class PersonLatePaymentDialogComponent implements OnInit {
         error: (e) => {
           this.blockUI.stop();
           this.logger.error(e);
-          const message = e?.status === 409 ? e?.error.error : 'Erro ao salvar atraso de mensalidade';
+          let message = 'Erro ao salvar atraso de mensalidade';
+          if (e?.status === 400 && e?.error?.errors?.length > 0) {
+            message = e.error.errors.map((err: any) => err.msg).join(', ');
+          } else if (e?.status === 409) {
+            message = e?.error.error;
+          }
           this.notificationService.openSnackBar(message);
         }
       });
