@@ -46,6 +46,7 @@
                 placeholder="Selecione o comando"
                 (selectionChange)="getRegionals(); socialAction.regionalId = 0; socialAction.divisionId = 0"
                 [(ngModel)]="selectedCommandId"
+                required
               >
                 <mat-option *ngFor="let command of commands" [value]="command.id">
                   {{ command.name }}

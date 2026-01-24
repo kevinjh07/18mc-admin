@@ -5,6 +5,7 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NGXLogger } from "ngx-logger";
 import { Division } from "src/app/core/models/division";
 import { Regional } from "src/app/core/models/regional";
+import { CommandService } from "src/app/core/services/command/command.service";
 import { DivisionService } from "src/app/core/services/division/division.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
@@ -18,13 +19,17 @@ export class DivisionRegistrationComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   public formGroup: FormGroup;
   division = new Division();
+  commands: any = [];
   regionals: Regional[] = [];
+
+  selectedCommandId: number;
 
   constructor(
     public formBuilder: FormBuilder,
     private notificationService: NotificationService,
-    private divisionService: DivisionService,
+    private commandService: CommandService,
     private regionalService: RegionalService,
+    private divisionService: DivisionService,
     private router: Router,
     private logger: NGXLogger,
     private activatedRoute: ActivatedRoute
@@ -33,6 +38,7 @@ export class DivisionRegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(150)]],
+      commandId: ["", [Validators.required]],
       regionalId: ["", [Validators.required]],
     });
 
@@ -44,7 +50,7 @@ export class DivisionRegistrationComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.listRegionals();
+    this.getCommands();
   }
 
   get(id: number) {
@@ -52,6 +58,8 @@ export class DivisionRegistrationComponent implements OnInit {
       next: (response: any) => {
         this.blockUI.stop();
         this.division = response;
+        this.selectedCommandId = response.Regional.commandId;
+        this.getRegionals();
       },
       error: (e) => {
         this.logger.error(e);
@@ -103,9 +111,26 @@ export class DivisionRegistrationComponent implements OnInit {
     });
   }
 
-  listRegionals() {
+  getCommands() {
+    this.commandService.getAll().subscribe({
+      next: (response: any) => {
+        this.commands = response;
+        this.regionals = [];
+      },
+      error: (e) => {
+        this.logger.error(e);
+        this.notificationService.openSnackBar("Erro ao obter lista de comandos, tente novamente");
+      },
+    });
+  }
+
+  getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 3, null).subscribe({
+    this.regionalService.getAll(1, 500, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];
