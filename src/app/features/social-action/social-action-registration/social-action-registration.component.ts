@@ -4,10 +4,10 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NGXLogger } from "ngx-logger";
 import { Division } from "src/app/core/models/division";
-import { SocialAction } from "src/app/core/models/socialAction";
+import { Event } from "src/app/core/models/event";
 import { DivisionService } from "src/app/core/services/division/division.service";
 import { NotificationService } from "src/app/core/services/notification.service";
-import { SocialActionService } from "src/app/core/services/social-action/social-action.service";
+import { EventService } from "src/app/core/services/event/event.service";
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, NativeDateAdapter } from "@angular/material/core";
 import { DualListComponent } from "angular-dual-listbox";
 import { PersonService } from "src/app/core/services/person/person.service";
@@ -15,6 +15,7 @@ import { Person } from "src/app/core/models/person";
 import { Regional } from "src/app/core/models/regional";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 import { Title } from "@angular/platform-browser";
+import { EventType } from "src/app/core/models/event-type";
 
 export const DEFAULT_FORMATS = {
   parse: {
@@ -45,7 +46,7 @@ export const DEFAULT_FORMATS = {
 export class SocialActionRegistrationComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   public formGroup: FormGroup;
-  socialAction = new SocialAction();
+  socialAction = new Event();
   regionals: Regional[] = [];
   divisions: Division[] = [];
   availablePerson: Person[] = [];
@@ -67,7 +68,7 @@ export class SocialActionRegistrationComponent implements OnInit {
     private router: Router,
     private logger: NGXLogger,
     private activatedRoute: ActivatedRoute,
-    private socialActionService: SocialActionService,
+    private socialActionService: EventService,
     private regionalService: RegionalService,
     private divisionService: DivisionService,
     private personService: PersonService,
@@ -120,6 +121,8 @@ export class SocialActionRegistrationComponent implements OnInit {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios!");
       return;
     }
+
+    this.socialAction.eventType = EventType.SOCIAL_ACTION;
 
     if (this.socialAction.id) {
       this.update();

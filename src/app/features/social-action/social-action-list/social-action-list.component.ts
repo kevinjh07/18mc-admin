@@ -12,10 +12,11 @@ import { DivisionService } from "src/app/core/services/division/division.service
 import { FilterService } from "src/app/core/services/filter/filter.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
-import { SocialActionService } from "src/app/core/services/social-action/social-action.service";
+import { EventService } from "src/app/core/services/event/event.service";
 import { SocialActionParticipantDialogComponent } from "../social-action-participant-dialog/social-action-participant-dialog.component";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Title } from "@angular/platform-browser";
+import { EventType } from "src/app/core/models/event-type";
 
 @Component({
   selector: "app-social-action-list",
@@ -42,7 +43,7 @@ export class SocialActionListComponent implements OnInit {
   constructor(
     private logger: NGXLogger,
     private notificationService: NotificationService,
-    private socialActionService: SocialActionService,
+    private socialActionService: EventService,
     private commandService: CommandService,
     private regionalService: RegionalService,
     private divisionService: DivisionService,
@@ -93,7 +94,7 @@ export class SocialActionListComponent implements OnInit {
 
     this.blockUI.start("Aguarde...");
     this.socialActionService
-      .getAll(this.paginator.pageIndex + 1, this.paginator.pageSize, this.selectedRegionalId, this.selectedDivisionId)
+      .getAll(this.paginator.pageIndex + 1, this.paginator.pageSize, EventType.SOCIAL_ACTION, this.selectedRegionalId, this.selectedDivisionId)
       .subscribe({
         next: (response: any) => {
           this.blockUI.stop();

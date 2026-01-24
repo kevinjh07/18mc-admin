@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { Person } from "src/app/core/models/person";
-import { SocialActionService } from "src/app/core/services/social-action/social-action.service";
+import { EventService } from "src/app/core/services/event/event.service";
 
 @Component({
   selector: "app-social-action-participant-dialog",
@@ -16,7 +16,7 @@ export class SocialActionParticipantDialogComponent implements OnInit {
   dataSource = new MatTableDataSource<Person>([]);
 
   constructor(
-    private socialActionService: SocialActionService,
+    private socialActionService: EventService,
     public dialogRef: MatDialogRef<SocialActionParticipantDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
