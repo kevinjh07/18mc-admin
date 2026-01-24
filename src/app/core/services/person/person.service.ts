@@ -39,15 +39,10 @@ export class PersonService {
     let queryParams: any = {};
     if (year) queryParams.year = year;
     const queryString = new URLSearchParams(queryParams).toString();
-    return this.http.get<Payment[]>(`${environment.baseUrl}/persons/${personId}/payments${queryString ? '?' + queryString : ''}`);
+    return this.http.get<Payment[]>(`${environment.baseUrl}/persons/${personId}/late-payments${queryString ? '?' + queryString : ''}`);
   }
 
   savePayment(personId: number, payment: Partial<Payment>) {
-    return this.http.post<Payment>(`${environment.baseUrl}/persons/${personId}/payments`, payment);
-  }
-
-  getLastPaymentStatus(personId: number) {
-    const currentYear = new Date().getFullYear();
-    return this.http.get<Payment[]>(`${environment.baseUrl}/persons/${personId}/payments?year=${currentYear}`);
+    return this.http.post<Payment>(`${environment.baseUrl}/persons/${personId}/late-payments`, payment);
   }
 }

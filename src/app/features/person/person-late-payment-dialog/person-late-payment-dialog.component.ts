@@ -7,14 +7,14 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
-  selector: 'app-person-payment-dialog',
-  templateUrl: './person-payment-dialog.component.html',
-  styleUrls: ['./person-payment-dialog.component.css']
+  selector: 'app-person-late-payment-dialog',
+  templateUrl: './person-late-payment-dialog.component.html',
+  styleUrls: ['./person-late-payment-dialog.component.css']
 })
-export class PersonPaymentDialogComponent implements OnInit {
+export class PersonLatePaymentDialogComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   formGroup: FormGroup;
-  payments: any[] = [];
+  latePayments: any[] = [];
   personId: number;
   months = [
     { value: 1, name: 'Janeiro' },
@@ -32,7 +32,7 @@ export class PersonPaymentDialogComponent implements OnInit {
   ];
 
   constructor(
-    private dialogRef: MatDialogRef<PersonPaymentDialogComponent>,
+    private dialogRef: MatDialogRef<PersonLatePaymentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { personId: number },
     private fb: FormBuilder,
     private personService: PersonService,
@@ -46,23 +46,23 @@ export class PersonPaymentDialogComponent implements OnInit {
     this.formGroup = this.fb.group({
       year: [new Date().getFullYear(), Validators.required],
       month: [new Date().getMonth() + 1, Validators.required],
-      paidOnTime: [true, Validators.required],
-      paidAt: [new Date().toISOString()]
+      paidAt: [new Date().toISOString()],
+      notes: ['', Validators.maxLength(255)],
     });
     this.loadPayments();
   }
 
   loadPayments() {
-    this.blockUI.start('Carregando pagamentos...');
+    this.blockUI.start('Carregando atrasos de mensalidade...');
     this.personService.getPayments(this.personId).subscribe({
       next: (payments) => {
         this.blockUI.stop();
-        this.payments = payments;
+        this.latePayments = payments;
       },
       error: (e) => {
         this.blockUI.stop();
         this.logger.error(e);
-        this.notificationService.openSnackBar('Erro ao carregar pagamentos');
+        this.notificationService.openSnackBar('Erro ao carregar atrasos de mensalidade');
       }
     });
   }
@@ -74,7 +74,7 @@ export class PersonPaymentDialogComponent implements OnInit {
       this.personService.savePayment(this.personId, payment).subscribe({
         next: () => {
           this.blockUI.stop();
-          this.notificationService.openSnackBar('Pagamento salvo com sucesso');
+          this.notificationService.openSnackBar('Atraso de mensalidade salvo com sucesso');
           this.loadPayments();
           this.formGroup.reset({
             year: new Date().getFullYear(),
@@ -86,7 +86,7 @@ export class PersonPaymentDialogComponent implements OnInit {
         error: (e) => {
           this.blockUI.stop();
           this.logger.error(e);
-          const message = e?.status === 409 ? e?.error.error : 'Erro ao salvar pagamento';
+          const message = e?.status === 409 ? e?.error.error : 'Erro ao salvar atraso de mensalidade';
           this.notificationService.openSnackBar(message);
         }
       });

@@ -1,8 +1,8 @@
 <mat-toolbar>
   {{ person.id == null ? "Cadastrar Integrante" : "Editar Integrante" }}
-  <button mat-flat-button *ngIf="person.id" style="margin-left: 1%" (click)="openPaymentDialog()" matTooltip="Gerenciar Pagamentos">
+  <button mat-flat-button *ngIf="person.id" style="margin-left: 1%" (click)="openLatePaymentDialog()" matTooltip="Gerenciar Pagamentos">
     <mat-icon>attach_money</mat-icon>
-    Lançar Pagamento
+    Lançar Atraso Mensalidade
   </button>
   <span class="spacer"></span>
 </mat-toolbar>

@@ -11,7 +11,7 @@ import { DivisionService } from "src/app/core/services/division/division.service
 import { NotificationService } from "src/app/core/services/notification.service";
 import { PersonService } from "src/app/core/services/person/person.service";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
-import { PersonPaymentDialogComponent } from "../person-payment-dialog/person-payment-dialog.component";
+import { PersonLatePaymentDialogComponent } from "../person-late-payment-dialog/person-late-payment-dialog.component";
 import { CommandService } from "src/app/core/services/command/command.service";
 
 @Component({
@@ -170,8 +170,8 @@ export class PersonRegistrationComponent implements OnInit {
     });
   }
 
-  openPaymentDialog() {
-    this.dialog.open(PersonPaymentDialogComponent, {
+  openLatePaymentDialog() {
+    this.dialog.open(PersonLatePaymentDialogComponent, {
       width: '80%',
       data: { personId: this.person.id }
     });

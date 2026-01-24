@@ -22,7 +22,7 @@ import { RegionalService } from "src/app/core/services/regional/regional.service
 })
 export class PersonListComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
-  displayedColumns: string[] = ["shortName", "hierarchyLevel", "isActive", "paymentStatus", "actions"];
+  displayedColumns: string[] = ["shortName", "hierarchyLevel", "isActive", "actions"];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort = new MatSort();
@@ -86,22 +86,6 @@ export class PersonListComponent implements OnInit {
           this.blockUI.stop();
           const persons = response?.data || [];
           this.dataSource.data = persons;
-
-          persons.forEach((person: any) => {
-            this.personService.getLastPaymentStatus(person.id).subscribe({
-              next: (payments: any[]) => {
-                if (payments.length > 0) {
-                  const latestPayment = payments[payments.length - 1];
-                  person.lastPaymentOnTime = latestPayment.paidOnTime;
-                } else {
-                  person.lastPaymentOnTime = false;
-                }
-              },
-              error: () => {
-                person.lastPaymentOnTime = false;
-              }
-            });
-          });
 
           setTimeout(() => {
             this.paginator.length = response?.totalItems;

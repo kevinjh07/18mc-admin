@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Gerenciar Pagamentos</h2>
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center">
+  <h3 style="margin: 0;">Atraso de Mensalidade</h3>
+  <button mat-mini-fab color="primary" (click)="close()" matTooltip="Fechar">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content>
   <form [formGroup]="formGroup" (ngSubmit)="savePayment()">
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
@@ -15,51 +20,48 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field [fxFlex]="25">
-        <mat-label>Pago em dia?</mat-label>
-        <mat-select formControlName="paidOnTime" required>
-          <mat-option [value]="true">Sim</mat-option>
-          <mat-option [value]="false">Não</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field [fxFlex]="25">
         <mat-label>Data do Pagamento</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="paidAt">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+      <mat-form-field [fxFlex]="100">
+        <textarea matInput placeholder="Observações" formControlName="notes" [maxLength]="255" cols="40"
+          rows="7"></textarea>
+        <mat-hint align="end">{{ formGroup.controls['notes'].value?.length }} / 255</mat-hint>
+      </mat-form-field>
+    </div>
     <button mat-flat-button color="primary" type="submit" [disabled]="!formGroup.valid">
       <mat-icon>save</mat-icon>
-      Salvar Pagamento
+      Salvar
     </button>
   </form>
 
-  <h3>Pagamentos Registrados</h3>
-  <table mat-table [dataSource]="payments">
+  <h3>Atrasos Registrados</h3>
+  <table mat-table [dataSource]="latePayments">
     <ng-container matColumnDef="year">
       <th mat-header-cell *matHeaderCellDef>Ano</th>
-      <td mat-cell *matCellDef="let payment">{{ payment.year }}</td>
+      <td mat-cell *matCellDef="let latePayment">{{ latePayment.year }}</td>
     </ng-container>
     <ng-container matColumnDef="month">
       <th mat-header-cell *matHeaderCellDef>Mês</th>
-      <td mat-cell *matCellDef="let payment">{{ getMonthName(payment.month) }}</td>
-    </ng-container>
-    <ng-container matColumnDef="paidOnTime">
-      <th mat-header-cell *matHeaderCellDef>Em dia</th>
-      <td mat-cell *matCellDef="let payment">
-        <mat-icon [style.color]="payment.paidOnTime ? 'green' : 'red'">
-          {{ payment.paidOnTime ? 'check_circle' : 'cancel' }}
-        </mat-icon>
-      </td>
+      <td mat-cell *matCellDef="let latePayment">{{ getMonthName(latePayment.month) }}</td>
     </ng-container>
     <ng-container matColumnDef="paidAt">
       <th mat-header-cell *matHeaderCellDef>Data</th>
-      <td mat-cell *matCellDef="let payment">{{ payment.paidAt | date:'dd/MM/yyyy' }}</td>
+      <td mat-cell *matCellDef="let latePayment">{{ latePayment.paidAt | date:'dd/MM/yyyy' }}</td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="['year', 'month', 'paidOnTime', 'paidAt']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['year', 'month', 'paidOnTime', 'paidAt']"></tr>
+    <ng-container matColumnDef="notes">
+      <th mat-header-cell *matHeaderCellDef>Observações</th>
+      <td mat-cell *matCellDef="let latePayment">
+        <mat-icon>
+          {{ latePayment.notes }}
+        </mat-icon>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['year', 'month', 'paidAt', 'notes']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['year', 'month', 'paidAt', 'notes']"></tr>
   </table>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="close()">Fechar</button>
-</mat-dialog-actions>

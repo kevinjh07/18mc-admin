@@ -9,10 +9,10 @@ import { PersonRoutingModule } from "./person-routing.module";
 import { PersonListComponent } from "./person-list/person-list.component";
 import { PersonRegistrationComponent } from "./person-registration/person-registration.component";
 import { SharedModule } from "src/app/shared/shared.module";
-import { PersonPaymentDialogComponent } from './person-payment-dialog/person-payment-dialog.component';
+import { PersonLatePaymentDialogComponent } from './person-late-payment-dialog/person-late-payment-dialog.component';
 
 @NgModule({
-  declarations: [PersonListComponent, PersonRegistrationComponent, PersonPaymentDialogComponent],
+  declarations: [PersonListComponent, PersonRegistrationComponent, PersonLatePaymentDialogComponent],
   imports: [
     CommonModule,
     PersonRoutingModule,
