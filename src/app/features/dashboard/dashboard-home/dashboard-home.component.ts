@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { ChartService } from "src/app/core/services/chart/chart.service";
@@ -66,6 +67,7 @@ export class DashboardHomeComponent implements OnInit {
 
   constructor(
     private logger: NGXLogger,
+    private router: Router,
     private chartService: ChartService,
     private notificationService: NotificationService,
     private regionalService: RegionalService,
@@ -74,6 +76,10 @@ export class DashboardHomeComponent implements OnInit {
     private filterService: FilterService,
     private titleService: Title
   ) {}
+
+  goBack(): void {
+    this.router.navigate(['/social-action']);
+  }
 
   ngOnInit() {
     this.titleService.setTitle("Dashboard - 18 Admin");
