@@ -60,6 +60,16 @@
           <p mat-line>Ações Sociais</p>
         </a>
 
+        <a mat-list-item [routerLink]="['/event']" routerLinkActive="active">
+          <mat-icon mat-list-icon> event </mat-icon>
+          <p mat-line>Eventos</p>
+        </a>
+
+        <a mat-list-item [routerLink]="['/poll']" routerLinkActive="active">
+          <mat-icon mat-list-icon> poll </mat-icon>
+          <p mat-line>Enquetes</p>
+        </a>
+
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon> leaderboard </mat-icon>
           <p mat-line>Dashboard</p>

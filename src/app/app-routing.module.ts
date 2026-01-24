@@ -44,6 +44,16 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "event",
+    loadChildren: () => import("./features/event/event.module").then((m) => m.EventModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "poll",
+    loadChildren: () => import("./features/poll/poll.module").then((m) => m.PollModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "**",
     redirectTo: "social-action",
     pathMatch: "full",

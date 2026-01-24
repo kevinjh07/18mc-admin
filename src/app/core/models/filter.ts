@@ -10,4 +10,10 @@ export class Filter {
   dashboardCommandlId?: number;
   dashboardRegionalId?: number;
   dashboardDivisionId?: number;
+  eventListCommandId?: number;
+  eventListRegionalId?: number;
+  eventListDivisionId?: number;
+  pollListCommandId?: number;
+  pollListRegionalId?: number;
+  pollListDivisionId?: number;
 }
