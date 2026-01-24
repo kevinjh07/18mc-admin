@@ -70,6 +70,7 @@ export class PersonRegistrationComponent implements OnInit {
       next: (response: any) => {
         this.blockUI.stop();
         this.person = response;
+        this.selectedCommandId = response.Division.Regional.commandId;
         this.selectedRegionalId = response.Division.Regional.id;
         this.getDivisions();
       },
@@ -132,8 +133,12 @@ export class PersonRegistrationComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 30, this.selectedCommandId).subscribe({
+    this.regionalService.getAll(1, 100, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];

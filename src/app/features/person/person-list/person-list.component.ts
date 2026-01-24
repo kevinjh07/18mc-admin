@@ -87,16 +87,14 @@ export class PersonListComponent implements OnInit {
           const persons = response?.data || [];
           this.dataSource.data = persons;
 
-          // Fetch payment status for each person
           persons.forEach((person: any) => {
             this.personService.getLastPaymentStatus(person.id).subscribe({
               next: (payments: any[]) => {
                 if (payments.length > 0) {
-                  // Find the latest payment (assuming sorted by date)
                   const latestPayment = payments[payments.length - 1];
                   person.lastPaymentOnTime = latestPayment.paidOnTime;
                 } else {
-                  person.lastPaymentOnTime = false; // No payment, assume not on time
+                  person.lastPaymentOnTime = false;
                 }
               },
               error: () => {
@@ -119,10 +117,14 @@ export class PersonListComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.filterService.updateFilter({ personListCommandId: this.selectedCommandId });
 
     this.blockUI.start("Aguarde...");
-    this.regionalService.getAll(1, 100, null).subscribe({
+    this.regionalService.getAll(1, 500, this.selectedCommandId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.regionals = response?.data || [];
