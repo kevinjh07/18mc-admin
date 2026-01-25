@@ -53,6 +53,26 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   flex-wrap: nowrap !important;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f5f5f5;
+}
+
+.summary-section::-webkit-scrollbar {
+  height: 8px;
+}
+
+.summary-section::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.summary-section::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.summary-section::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 .summary-card {
@@ -153,6 +173,26 @@
 .table-card {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f5f5f5;
+}
+
+.table-card::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-card::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.table-card::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-card::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 .graduation-table {
