@@ -25,6 +25,10 @@
   margin-bottom: 24px;
 }
 
+.filter-card ::ng-deep .mat-card-header-text {
+  margin: 0;
+}
+
 .filter-card mat-card-title {
   display: flex;
   align-items: center;
