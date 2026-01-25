@@ -465,7 +465,7 @@ export class GraduationReportComponent implements OnInit {
               <span class="${item.scores.poll === 1 ? 'check' : 'cross'}" title="Enquete">${item.scores.poll === 1 ? '✓' : '✗'}</span>
               <span class="${item.scores.otherEvents === 1 ? 'check' : 'cross'}" title="Eventos">${item.scores.otherEvents === 1 ? '✓' : '✗'}</span>
               <span class="${item.scores.payments === 1 ? 'check' : 'cross'}" title="Mensalidade">${item.scores.payments === 1 ? '✓' : '✗'}</span>
-              <span class="${hasVote ? 'vote-yes' : 'vote-no'}" title="Voto Diretor">${hasVote ? '👍' : '-'}</span>
+              <span class="vote-badge ${hasVote ? 'vote-yes' : 'vote-no'}" title="Voto Diretor">${hasVote ? '👍 +1' : '—'}</span>
             </div>
             <div class="member-total" style="background: ${badgeColor}; color: ${badgeTextColor};">
               ${adjustedTotal}
@@ -517,8 +517,9 @@ export class GraduationReportComponent implements OnInit {
 
           .check { color: #4caf50; }
           .cross { color: #f44336; }
-          .vote-yes { color: #3f51b5; }
-          .vote-no { color: #999; }
+          .vote-badge { padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+          .vote-yes { background: #e8eaf6; color: #3f51b5; border: 1px solid #3f51b5; }
+          .vote-no { background: #f5f5f5; color: #bbb; border: 1px solid #ddd; }
 
           .member-details { display: flex; gap: 20px; padding: 15px; background: white; }
           .events-section, .payments-section { flex: 1; }
