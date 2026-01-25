@@ -6,6 +6,7 @@ import { Person } from "src/app/core/models/person";
 import { EventService } from "src/app/core/services/event/event.service";
 
 @Component({
+    standalone: false,
   selector: "app-poll-participant-dialog",
   templateUrl: "./poll-participant-dialog.component.html",
   styleUrls: ["./poll-participant-dialog.component.css"],
@@ -42,3 +43,4 @@ export class PollParticipantDialogComponent implements OnInit {
     });
   }
 }
+

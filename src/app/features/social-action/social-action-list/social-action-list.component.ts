@@ -19,6 +19,7 @@ import { Title } from "@angular/platform-browser";
 import { EventType } from "src/app/core/models/event-type";
 
 @Component({
+    standalone: false,
   selector: "app-social-action-list",
   templateUrl: "./social-action-list.component.html",
   styleUrls: ["./social-action-list.component.css"],
@@ -175,3 +176,4 @@ export class SocialActionListComponent implements OnInit {
     });
   }
 }
+

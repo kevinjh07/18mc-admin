@@ -74,6 +74,7 @@ export interface GraduationReportResponse {
 }
 
 @Component({
+    standalone: false,
   selector: 'app-graduation-report',
   templateUrl: './graduation-report.component.html',
   styleUrls: ['./graduation-report.component.css'],
@@ -365,3 +366,4 @@ export class GraduationReportComponent implements OnInit {
     });
   }
 }
+

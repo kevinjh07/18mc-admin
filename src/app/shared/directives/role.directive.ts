@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Directive({
+  standalone: false,
   selector: '[role]',
 })
 export class RoleDirective implements OnInit {
@@ -18,3 +19,4 @@ export class RoleDirective implements OnInit {
     }
   }
 }
+

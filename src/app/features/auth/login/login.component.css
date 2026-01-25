@@ -1,3 +1,9 @@
 .login-container {
-    height: 100vh; /* 100% da altura da viewport */
+    height: 100vh;
+    margin: 0 !important;
+    background-color: var(--mat-sidenav-content-background-color, var(--mat-sys-background));
+}
+
+.login-container mat-card-title {
+    color: white;
 }

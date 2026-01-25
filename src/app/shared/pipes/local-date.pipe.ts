@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { format } from 'date-fns';
 
 @Pipe({
+  standalone: false,
   name: 'localDate'
 })
 export class LocalDatePipe implements PipeTransform {
@@ -19,3 +20,4 @@ export class LocalDatePipe implements PipeTransform {
   }
 
 }
+

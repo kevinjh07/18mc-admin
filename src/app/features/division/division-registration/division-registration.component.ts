@@ -11,6 +11,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 
 @Component({
+    standalone: false,
   selector: "app-division-registration",
   templateUrl: "./division-registration.component.html",
   styleUrls: ["./division-registration.component.css"],
@@ -143,3 +144,4 @@ export class DivisionRegistrationComponent implements OnInit {
     });
   }
 }
+

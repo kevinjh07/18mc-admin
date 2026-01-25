@@ -15,6 +15,7 @@ import { PersonLatePaymentDialogComponent } from "../person-late-payment-dialog/
 import { CommandService } from "src/app/core/services/command/command.service";
 
 @Component({
+    standalone: false,
   selector: "app-person-registration",
   templateUrl: "./person-registration.component.html",
   styleUrls: ["./person-registration.component.css"],
@@ -191,3 +192,4 @@ export class PersonRegistrationComponent implements OnInit {
     });
   }
 }
+

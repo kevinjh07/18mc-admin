@@ -3,6 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
+    standalone: false,
   selector: 'app-select-check-all',
   templateUrl: './select-check-all.component.html',
   styleUrls: ['./select-check-all.component.css'],
@@ -34,3 +35,4 @@ export class SelectCheckAllComponent {
     }
   }
 }
+

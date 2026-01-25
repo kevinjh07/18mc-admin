@@ -8,6 +8,7 @@ import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 @Component({
+    standalone: false,
     selector: 'app-layout',
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.css']
@@ -55,3 +56,4 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.changeDetectorRef.detectChanges();
     }
 }
+

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
+    standalone: false,
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
   styleUrls: ['./profile-details.component.css']
@@ -20,3 +21,4 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
 }
+

@@ -19,6 +19,7 @@ import { Title } from "@angular/platform-browser";
 import { EventType } from "src/app/core/models/event-type";
 
 @Component({
+    standalone: false,
   selector: "app-poll-list",
   templateUrl: "./poll-list.component.html",
   styleUrls: ["./poll-list.component.css"],
@@ -175,3 +176,4 @@ export class PollListComponent implements OnInit {
     });
   }
 }
+

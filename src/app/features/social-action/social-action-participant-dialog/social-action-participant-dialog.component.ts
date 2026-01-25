@@ -6,6 +6,7 @@ import { Person } from "src/app/core/models/person";
 import { EventService } from "src/app/core/services/event/event.service";
 
 @Component({
+    standalone: false,
   selector: "app-social-action-participant-dialog",
   templateUrl: "./social-action-participant-dialog.component.html",
   styleUrls: ["./social-action-participant-dialog.component.css"],
@@ -42,3 +43,4 @@ export class SocialActionParticipantDialogComponent implements OnInit {
     });
   }
 }
+

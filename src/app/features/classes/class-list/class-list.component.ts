@@ -10,6 +10,7 @@ import { ClassService } from "src/app/core/services/class/class.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 
 @Component({
+    standalone: false,
   selector: "app-class-list",
   templateUrl: "./class-list.component.html",
   styleUrls: ["./class-list.component.css"],
@@ -65,3 +66,4 @@ export class ClassListComponent implements OnInit {
       });
   }
 }
+
