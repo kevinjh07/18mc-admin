@@ -189,7 +189,7 @@ export class GraduationReportComponent implements OnInit {
     this.reportService.getGraduationScores(divisionId, formattedStartDate, formattedEndDate).subscribe({
       next: (response: GraduationReportResponse) => {
         this.blockUI.stop();
-        this.reportData = response.data.sort((a, b) => b.totalScore - a.totalScore);
+        this.reportData = response.data;
         this.reportPeriod = response.period;
         this.reportGenerated = true;
         this.calculateSummary();

@@ -11,12 +11,13 @@
   font-size: 36px;
   width: 36px;
   height: 36px;
+  color: white;
 }
 
 .page-title {
   margin: 0;
   font-weight: 400;
-  color: #333;
+  color: white;
 }
 
 /* Filter Card */
@@ -109,22 +110,22 @@
 
 .summary-label {
   font-size: 12px;
-  color: #666;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
 }
 
 .summary-value {
   font-size: 28px;
   font-weight: 600;
-  color: #333;
+  color: #ccc;
 }
 
 /* Legend Card */
 .legend-card {
   padding: 16px;
   margin-bottom: 24px;
-  background: #fafafa;
 }
 
 .legend-item {
@@ -208,13 +209,13 @@
 }
 
 .full-name {
-  font-weight: 500;
-  color: #333;
+  font-size: 12px;
+  color: #ccc;
 }
 
 .short-name {
-  font-size: 12px;
-  color: #999;
+  font-weight: 500;
+  color: white;
 }
 
 /* Score Columns */
