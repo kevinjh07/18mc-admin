@@ -147,26 +147,36 @@
   gap: 8px;
 }
 
-.legend-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+.legend-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
-.legend-icon.blue {
-  color: #3f51b5;
+.legend-badge mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: white;
 }
 
-.legend-icon.purple {
-  color: #9c27b0;
+.legend-badge.blue {
+  background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
 }
 
-.legend-icon.orange {
-  color: #ff9800;
+.legend-badge.purple {
+  background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
 }
 
-.legend-icon.green {
-  color: #4caf50;
+.legend-badge.orange {
+  background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+}
+
+.legend-badge.green {
+  background: linear-gradient(135deg, #388e3c 0%, #4caf50 100%);
 }
 
 /* Table Card */
@@ -260,26 +270,36 @@
   text-align: center;
 }
 
-.column-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+.column-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
 }
 
-.column-icon.blue {
-  color: #3f51b5;
+.column-badge mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: white;
 }
 
-.column-icon.purple {
-  color: #9c27b0;
+.column-badge.blue {
+  background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
 }
 
-.column-icon.orange {
-  color: #ff9800;
+.column-badge.purple {
+  background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
 }
 
-.column-icon.green {
-  color: #4caf50;
+.column-badge.orange {
+  background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+}
+
+.column-badge.green {
+  background: linear-gradient(135deg, #388e3c 0%, #4caf50 100%);
 }
 
 .score-success {
