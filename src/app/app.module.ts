@@ -13,7 +13,7 @@ import { environment } from "../environments/environment";
 import { BlockUIModule } from "ng-block-ui";
 import { NgxMaskModule } from "ngx-mask";
 import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from "ng2-currency-mask";
-import { MatLegacyPaginatorIntl as MatPaginatorIntl } from "@angular/material/legacy-paginator";
+import { MatPaginatorIntl } from "@angular/material/paginator";
 import { CustomMatPaginatorIntl } from "./shared/mat-paginator-intl/custom-paginator-intl";
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 

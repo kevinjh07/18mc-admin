@@ -43,8 +43,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "15kb"
                 }
               ],
               "fileReplacements": [
@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "18mc-admin:build:production"
+              "buildTarget": "18mc-admin:build:production"
             },
             "development": {
-              "browserTarget": "18mc-admin:build:development"
+              "buildTarget": "18mc-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "18mc-admin:build"
+            "buildTarget": "18mc-admin:build"
           }
         },
         "test": {

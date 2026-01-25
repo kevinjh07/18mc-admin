@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
-import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { Person } from "src/app/core/models/person";
 import { EventService } from "src/app/core/services/event/event.service";
