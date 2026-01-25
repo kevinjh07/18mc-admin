@@ -221,6 +221,13 @@ export class GraduationReportComponent implements OnInit {
     return 'score-fail';
   }
 
+  getPositionBadgeClass(score: number): string {
+    if (score >= 3) return 'score-high';
+    if (score === 2) return 'score-medium';
+    if (score < 2) return 'score-low';
+    return '';
+  }
+
   getTotalScoreClass(score: number): string {
     if (score === 4) return 'total-excellent';
     if (score >= 3) return 'total-good';

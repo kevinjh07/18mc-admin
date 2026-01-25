@@ -183,20 +183,22 @@
   color: #666;
 }
 
-.position-badge.gold {
-  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+.position-badge.score-high {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+}
+
+.position-badge.score-medium {
+  background: linear-gradient(135deg, #ffc107 0%, #ffca28 100%);
   color: #5d4e00;
   box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
 }
 
-.position-badge.silver {
-  background: linear-gradient(135deg, #c0c0c0 0%, #9e9e9e 100%);
-  color: #424242;
-}
-
-.position-badge.bronze {
-  background: linear-gradient(135deg, #cd7f32 0%, #a0522d 100%);
+.position-badge.score-low {
+  background: linear-gradient(135deg, #f44336 0%, #e57373 100%);
   color: white;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.4);
 }
 
 /* Name Cell */
