@@ -73,14 +73,13 @@ export class GraduationReportComponent implements OnInit {
   reportData: GraduationScore[] = [];
   reportPeriod: { start: string; end: string } | null = null;
   reportGenerated = false;
+  directorVotes: Map<number, number> = new Map();
 
-  // Summary stats
   totalMembers = 0;
   avgScore = 0;
-  maxScore = 0;
   perfectScoreCount = 0;
 
-  displayedColumns: string[] = ['position', 'fullName', 'socialAction', 'poll', 'otherEvents', 'payments', 'totalScore'];
+  displayedColumns: string[] = ['position', 'fullName', 'socialAction', 'poll', 'otherEvents', 'payments', 'totalScore', 'directorVote'];
 
   constructor(
     private fb: FormBuilder,
@@ -96,7 +95,6 @@ export class GraduationReportComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Relatório de Graduação - 18 Admin');
 
-    // Default dates: current year
     const currentYear = new Date().getFullYear();
     const startDate = new Date(currentYear, 0, 1);
     const endDate = new Date(currentYear, 11, 31);
@@ -207,11 +205,9 @@ export class GraduationReportComponent implements OnInit {
     if (this.totalMembers > 0) {
       const totalScoreSum = this.reportData.reduce((sum, item) => sum + item.totalScore, 0);
       this.avgScore = Math.round((totalScoreSum / this.totalMembers) * 10) / 10;
-      this.maxScore = Math.max(...this.reportData.map((item) => item.totalScore));
       this.perfectScoreCount = this.reportData.filter((item) => item.totalScore === 4).length;
     } else {
       this.avgScore = 0;
-      this.maxScore = 0;
       this.perfectScoreCount = 0;
     }
   }
@@ -239,6 +235,26 @@ export class GraduationReportComponent implements OnInit {
     return (score / 4) * 100;
   }
 
+  toggleVote(personId: number): void {
+    if (this.directorVotes.has(personId)) {
+      this.directorVotes.delete(personId);
+    } else {
+      this.directorVotes.set(personId, 1);
+    }
+  }
+
+  hasVote(personId: number): boolean {
+    return this.directorVotes.has(personId);
+  }
+
+  getAdjustedTotal(personId: number, totalScore: number): number {
+    return totalScore + (this.directorVotes.has(personId) ? 1 : 0);
+  }
+
+  resetVotes(): void {
+    this.directorVotes.clear();
+  }
+
   exportToPdf(): void {
     if (!this.reportGenerated || this.reportData.length === 0) {
       this.notificationService.openSnackBar('Nenhum dado para exportar');
@@ -250,7 +266,6 @@ export class GraduationReportComponent implements OnInit {
     const regionalName = this.regionals.find(r => r.id === this.filterForm.get('regionalId')?.value)?.name || 'Regional';
     const divisionName = this.divisions.find(d => d.id === this.filterForm.get('divisionId')?.value)?.name || 'Divisão';
 
-    // Create print content
     const printContent = this.generatePrintContent(commandName, regionalName, divisionName);
     const printWindow = window.open('', '_blank');
     if (printWindow) {
@@ -267,15 +282,18 @@ export class GraduationReportComponent implements OnInit {
   generatePrintContent(commandName: string, regionalName: string, divisionName: string): string {
     let tableRows = '';
     this.reportData.forEach((item, index) => {
+      const hasVote = this.directorVotes.has(item.personId);
+      const adjustedTotal = item.totalScore + (hasVote ? 1 : 0);
       tableRows += `
         <tr>
           <td style="text-align: center;">${index + 1}</td>
-          <td>${item.fullName}</td>
+          <td>${item.shortName}</td>
           <td style="text-align: center;">${item.scores.socialAction === 1 ? '✓' : '✗'}</td>
           <td style="text-align: center;">${item.scores.poll === 1 ? '✓' : '✗'}</td>
           <td style="text-align: center;">${item.scores.otherEvents === 1 ? '✓' : '✗'}</td>
           <td style="text-align: center;">${item.scores.payments === 1 ? '✓' : '✗'}</td>
-          <td style="text-align: center; font-weight: bold;">${item.totalScore}</td>
+          <td style="text-align: center; font-weight: bold;">${adjustedTotal}</td>
+          <td style="text-align: center; font-weight: bold; color: #3f51b5;">${hasVote ? '✓' : '-'}</td>
         </tr>
       `;
     });
@@ -314,25 +332,6 @@ export class GraduationReportComponent implements OnInit {
         </div>
         <p class="period">Período: ${this.reportPeriod?.start} a ${this.reportPeriod?.end}</p>
 
-        <div class="summary">
-          <div class="summary-card">
-            <h4>Total de Integrantes</h4>
-            <p>${this.totalMembers}</p>
-          </div>
-          <div class="summary-card">
-            <h4>Média de Pontos</h4>
-            <p>${this.avgScore}</p>
-          </div>
-          <div class="summary-card">
-            <h4>Pontuação Máxima</h4>
-            <p>${this.maxScore}</p>
-          </div>
-          <div class="summary-card">
-            <h4>Integrantes com 4 Pontos</h4>
-            <p>${this.perfectScoreCount}</p>
-          </div>
-        </div>
-
         <table>
           <thead>
             <tr>
@@ -343,6 +342,7 @@ export class GraduationReportComponent implements OnInit {
               <th style="width: 100px;">Eventos</th>
               <th style="width: 100px;">Mensalidade</th>
               <th style="width: 80px;">Total</th>
+              <th style="width: 80px;">Voto do Diretor</th>
             </tr>
           </thead>
           <tbody>

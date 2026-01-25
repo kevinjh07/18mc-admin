@@ -73,11 +73,6 @@
     </mat-card>
 
     <div *ngIf="reportGenerated" class="report-content">
-      <div class="period-info" *ngIf="reportPeriod">
-        <mat-icon>date_range</mat-icon>
-        <span>Período: <strong>{{ reportPeriod.start }}</strong> a <strong>{{ reportPeriod.end }}</strong></span>
-      </div>
-
       <div fxLayout="row wrap" fxLayoutGap="16px" class="summary-section">
         <mat-card class="summary-card" fxFlex="calc(25% - 16px)" fxFlex.lt-md="calc(50% - 16px)">
           <div class="summary-icon blue">
@@ -136,7 +131,7 @@
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef class="position-column">#</th>
             <td mat-cell *matCellDef="let element; let i = index" class="position-column">
-              <span class="position-badge" [ngClass]="getPositionBadgeClass(element.totalScore)">
+              <span class="position-badge" [ngClass]="getPositionBadgeClass(getAdjustedTotal(element.personId, element.totalScore))">
                 {{ i + 1 }}
               </span>
             </td>
@@ -200,13 +195,24 @@
             <th mat-header-cell *matHeaderCellDef class="total-column">Total</th>
             <td mat-cell *matCellDef="let element" class="total-column">
               <div class="total-score-cell">
-                <span class="total-value" [ngClass]="getTotalScoreClass(element.totalScore)">
-                  {{ element.totalScore }}
+                <span class="total-value" [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))">
+                  {{ getAdjustedTotal(element.personId, element.totalScore) }}
                 </span>
-                <mat-progress-bar [value]="getProgressValue(element.totalScore)"
-                  [ngClass]="getTotalScoreClass(element.totalScore)" mode="determinate">
+                <mat-progress-bar [value]="getProgressValue(getAdjustedTotal(element.personId, element.totalScore))"
+                  [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))" mode="determinate">
                 </mat-progress-bar>
               </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="directorVote">
+            <th mat-header-cell *matHeaderCellDef class="total-column">Voto do Diretor</th>
+            <td mat-cell *matCellDef="let element" class="vote-column">
+              <button mat-icon-button (click)="toggleVote(element.personId)"
+                [color]="hasVote(element.personId) ? 'primary' : 'default'"
+                matTooltip="{{ hasVote(element.personId) ? 'Remover voto' : 'Votar' }}">
+                <mat-icon>{{ hasVote(element.personId) ? 'thumb_up' : 'thumb_up_off_alt' }}</mat-icon>
+              </button>
             </td>
           </ng-container>
 
