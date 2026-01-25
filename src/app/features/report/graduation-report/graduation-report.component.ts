@@ -287,9 +287,7 @@ export class GraduationReportComponent implements OnInit {
     this.directorVotes.clear();
   }
 
-  // Expansion methods
   toggleRow(element: GraduationScore, event: Event): void {
-    // Don't expand if clicking on vote button
     if ((event.target as HTMLElement).closest('button')) {
       return;
     }
@@ -371,18 +369,16 @@ export class GraduationReportComponent implements OnInit {
       const hasVote = this.directorVotes.has(item.personId);
       const adjustedTotal = item.totalScore + (hasVote ? 1 : 0);
 
-      // Events by type
       const socialActions = item.events?.filter(e => e.eventType === 'social_action') || [];
       const polls = item.events?.filter(e => e.eventType === 'poll') || [];
       const otherEvents = item.events?.filter(e => e.eventType === 'other') || [];
 
-      // Build events HTML
       let eventsHtml = '';
 
       if (socialActions.length > 0) {
         eventsHtml += `
           <div class="event-group">
-            <div class="event-group-title" style="color: #3f51b5;">🤝 Ações Sociais</div>
+            <div class="event-group-title">🤝 Ações Sociais</div>
             ${socialActions.map(e => `
               <div class="event-item">
                 <span class="${e.participated ? 'check' : 'cross'}">${e.participated ? '✓' : '✗'}</span>
@@ -397,7 +393,7 @@ export class GraduationReportComponent implements OnInit {
       if (polls.length > 0) {
         eventsHtml += `
           <div class="event-group">
-            <div class="event-group-title" style="color: #9c27b0;">📊 Enquetes</div>
+            <div class="event-group-title">📊 Enquetes</div>
             ${polls.map(e => `
               <div class="event-item">
                 <span class="${e.participated ? 'check' : 'cross'}">${e.participated ? '✓' : '✗'}</span>
@@ -412,7 +408,7 @@ export class GraduationReportComponent implements OnInit {
       if (otherEvents.length > 0) {
         eventsHtml += `
           <div class="event-group">
-            <div class="event-group-title" style="color: #ff9800;">📅 Outros Eventos</div>
+            <div class="event-group-title">📅 Outros Eventos</div>
             ${otherEvents.map(e => `
               <div class="event-item">
                 <span class="${e.participated ? 'check' : 'cross'}">${e.participated ? '✓' : '✗'}</span>
@@ -424,7 +420,6 @@ export class GraduationReportComponent implements OnInit {
         `;
       }
 
-      // Build payments HTML
       let paymentsHtml = '';
       if (!item.latePayments || item.latePayments.length === 0) {
         paymentsHtml = `<div class="no-late-payment">✅ Nenhum atraso de mensalidade registrado</div>`;
@@ -442,7 +437,6 @@ export class GraduationReportComponent implements OnInit {
         `;
       }
 
-      // Score badge color
       let badgeColor = '#e0e0e0';
       let badgeTextColor = '#666';
       if (adjustedTotal >= 3) {
@@ -456,8 +450,10 @@ export class GraduationReportComponent implements OnInit {
         badgeTextColor = 'white';
       }
 
+      const isLastItem = index === this.reportData.length - 1;
+
       memberDetails += `
-        <div class="member-card">
+        <div class="member-card${isLastItem ? ' last-member-card' : ''}">
           <div class="member-header">
             <div class="member-position" style="background: ${badgeColor}; color: ${badgeTextColor};">${index + 1}</div>
             <div class="member-name">
@@ -533,18 +529,59 @@ export class GraduationReportComponent implements OnInit {
           .event-item { display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 3px 0; }
           .event-date { color: #999; margin-left: auto; }
 
-          .no-late-payment { color: #4caf50; font-size: 12px; }
+          .no-late-payment { font-size: 12px; }
           .no-events { color: #999; font-size: 12px; font-style: italic; }
           .late-payment-item { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 5px 0; }
           .payment-status { color: #999; margin-left: auto; }
           .warning { font-size: 14px; }
 
-          .footer { margin-top: 30px; text-align: center; color: #999; font-size: 12px; }
+          .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            page-break-before: avoid;
+            break-before: avoid;
+          }
+
+          .last-member-card {
+            page-break-after: avoid;
+            break-after: avoid;
+          }
 
           @media print {
             .member-card { page-break-inside: avoid; }
+            .footer { page-break-before: avoid !important; break-before: avoid !important; }
+            .last-member-card { page-break-after: avoid !important; break-after: avoid !important; }
+          }
+
+          @page {
+            margin: 20mm 15mm 25mm 15mm;
+            @bottom-right {
+              content: "Página " counter(page) " de " counter(pages);
+              font-size: 10px;
+              color: #999;
+            }
+          }
+
+          .page-number {
+            position: fixed;
+            bottom: 10px;
+            right: 20px;
+            font-size: 10px;
+            color: #999;
           }
         </style>
+        <script>
+          // Fallback for browsers that don't support @page counters
+          window.onload = function() {
+            var totalPages = Math.ceil(document.body.scrollHeight / 1123); // A4 height in pixels at 96dpi
+            var pageNumEl = document.querySelector('.page-number-fallback');
+            if (pageNumEl) {
+              pageNumEl.style.display = 'none'; // Hide fallback if @page works
+            }
+          };
+        </script>
       </head>
       <body>
         <img src="${window.location.origin}/assets/favicon/android-icon-192x192.png" alt="Logo" class="logo" />
@@ -582,6 +619,7 @@ export class GraduationReportComponent implements OnInit {
         ${memberDetails}
 
         <p class="footer">Gerado em ${format(new Date(), 'dd/MM/yyyy HH:mm')}</p>
+        <div class="page-number"></div>
       </body>
       </html>
     `;
