@@ -286,9 +286,10 @@ export class GraduationReportComponent implements OnInit {
       <head>
         <title>Relatório de Graduação - ${divisionName}</title>
         <style>
-          body { font-family: Arial, sans-serif; margin: 20px; }
+          body { font-family: Arial, sans-serif; margin: 20px; position: relative; }
           h1 { text-align: center; color: #3f51b5; }
           h3 { color: #666; }
+          .logo { position: absolute; top: 10px; right: 10px; width: 60px; height: 60px; }
           .header-info { text-align: center; margin-bottom: 10px; }
           .header-info span { color: #666; font-size: 14px; }
           .period { text-align: center; margin-bottom: 20px; color: #666; }
@@ -304,6 +305,7 @@ export class GraduationReportComponent implements OnInit {
         </style>
       </head>
       <body>
+        <img src="${window.location.origin}/assets/favicon/android-icon-192x192.png" alt="Logo" class="logo" />
         <h1>Relatório de Graduação</h1>
         <div class="header-info">
           <span><strong>Comando:</strong> ${commandName}</span> |
