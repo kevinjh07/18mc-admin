@@ -317,6 +317,7 @@
 /* Total Column */
 .total-column {
   width: 120px;
+  text-align: center;
 }
 
 .total-score-cell {
