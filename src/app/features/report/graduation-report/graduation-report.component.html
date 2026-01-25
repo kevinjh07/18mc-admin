@@ -1,11 +1,11 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="97%">
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="header-section">
-      <mat-icon class="header-icon" color="primary">school</mat-icon>
-      <h2 class="page-title">Relatório de Graduação</h2>
-    </div>
 
     <mat-card class="filter-card">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="header-section">
+        <mat-icon class="header-icon" color="primary">school</mat-icon>
+        <h2 class="page-title">Relatório de Graduação</h2>
+      </div>
       <mat-card-header>
         <mat-card-title>
           <mat-icon>filter_list</mat-icon>
@@ -131,7 +131,8 @@
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef class="position-column">#</th>
             <td mat-cell *matCellDef="let element; let i = index" class="position-column">
-              <span class="position-badge" [ngClass]="getPositionBadgeClass(getAdjustedTotal(element.personId, element.totalScore))">
+              <span class="position-badge"
+                [ngClass]="getPositionBadgeClass(getAdjustedTotal(element.personId, element.totalScore))">
                 {{ i + 1 }}
               </span>
             </td>
@@ -195,11 +196,13 @@
             <th mat-header-cell *matHeaderCellDef class="total-column">Total</th>
             <td mat-cell *matCellDef="let element" class="total-column">
               <div class="total-score-cell">
-                <span class="total-value" [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))">
+                <span class="total-value"
+                  [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))">
                   {{ getAdjustedTotal(element.personId, element.totalScore) }}
                 </span>
                 <mat-progress-bar [value]="getProgressValue(getAdjustedTotal(element.personId, element.totalScore))"
-                  [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))" mode="determinate">
+                  [ngClass]="getTotalScoreClass(getAdjustedTotal(element.personId, element.totalScore))"
+                  mode="determinate">
                 </mat-progress-bar>
               </div>
             </td>
