@@ -245,10 +245,13 @@ export class GraduationReportComponent implements OnInit {
       return;
     }
 
+    const commandFullName = this.commands.find(c => c.id === this.filterForm.get('commandId')?.value)?.name || 'Comando';
+    const commandName = commandFullName.includes(' ') ? commandFullName.split(' ').slice(1).join(' ') : commandFullName;
+    const regionalName = this.regionals.find(r => r.id === this.filterForm.get('regionalId')?.value)?.name || 'Regional';
     const divisionName = this.divisions.find(d => d.id === this.filterForm.get('divisionId')?.value)?.name || 'Divisão';
 
     // Create print content
-    const printContent = this.generatePrintContent(divisionName);
+    const printContent = this.generatePrintContent(commandName, regionalName, divisionName);
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(printContent);
@@ -261,7 +264,7 @@ export class GraduationReportComponent implements OnInit {
     }
   }
 
-  generatePrintContent(divisionName: string): string {
+  generatePrintContent(commandName: string, regionalName: string, divisionName: string): string {
     let tableRows = '';
     this.reportData.forEach((item, index) => {
       tableRows += `
@@ -286,6 +289,8 @@ export class GraduationReportComponent implements OnInit {
           body { font-family: Arial, sans-serif; margin: 20px; }
           h1 { text-align: center; color: #3f51b5; }
           h3 { color: #666; }
+          .header-info { text-align: center; margin-bottom: 10px; }
+          .header-info span { color: #666; font-size: 14px; }
           .period { text-align: center; margin-bottom: 20px; color: #666; }
           .summary { display: flex; justify-content: space-around; margin-bottom: 20px; }
           .summary-card { background: #f5f5f5; padding: 15px; border-radius: 8px; text-align: center; }
@@ -300,7 +305,11 @@ export class GraduationReportComponent implements OnInit {
       </head>
       <body>
         <h1>Relatório de Graduação</h1>
-        <h3 style="text-align: center;">${divisionName}</h3>
+        <div class="header-info">
+          <span><strong>Comando:</strong> ${commandName}</span> |
+          <span><strong>Regional:</strong> ${regionalName}</span> |
+          <span><strong>Divisão:</strong> ${divisionName}</span>
+        </div>
         <p class="period">Período: ${this.reportPeriod?.start} a ${this.reportPeriod?.end}</p>
 
         <div class="summary">
