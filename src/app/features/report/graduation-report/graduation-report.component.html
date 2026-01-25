@@ -135,13 +135,23 @@
       </mat-card>
 
       <mat-card class="table-card" *ngIf="reportData.length > 0">
-        <table mat-table [dataSource]="reportData" class="graduation-table">
+        <table mat-table [dataSource]="reportData" multiTemplateDataRows class="graduation-table">
+          <!-- Expand Column -->
+          <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef class="expand-column"></th>
+            <td mat-cell *matCellDef="let element" class="expand-column">
+              <mat-icon class="expand-icon" [ngClass]="{'expanded': expandedElement === element}">
+                {{ expandedElement === element ? 'expand_less' : 'expand_more' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef class="position-column">#</th>
-            <td mat-cell *matCellDef="let element; let i = index" class="position-column">
+            <td mat-cell *matCellDef="let element" class="position-column">
               <span class="position-badge"
                 [ngClass]="getPositionBadgeClass(getAdjustedTotal(element.personId, element.totalScore))">
-                {{ i + 1 }}
+                {{ getRowIndex(element) }}
               </span>
             </td>
           </ng-container>
@@ -235,9 +245,129 @@
             </td>
           </ng-container>
 
+          <!-- Expanded Content Column -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+              <div class="detail-row" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                <div class="detail-content" *ngIf="element === expandedElement">
+
+                  <!-- Events Section -->
+                  <div class="detail-section events-section">
+                    <h4 class="section-title">
+                      <mat-icon>event_note</mat-icon>
+                      Participação em Eventos
+                    </h4>
+
+                    <div class="events-grid">
+                      <!-- Social Actions -->
+                      <div class="event-type-card" *ngIf="getEventsByType(element.events, 'social_action').length > 0">
+                        <div class="event-type-header blue">
+                          <span class="event-type-badge blue">
+                            <mat-icon>diversity_3</mat-icon>
+                          </span>
+                          <span>Ações Sociais</span>
+                        </div>
+                        <div class="event-list">
+                          <div class="event-item" *ngFor="let event of getEventsByType(element.events, 'social_action')">
+                            <mat-icon [ngClass]="event.participated ? 'participated' : 'not-participated'">
+                              {{ event.participated ? 'check_circle' : 'cancel' }}
+                            </mat-icon>
+                            <div class="event-info">
+                              <span class="event-title">{{ event.title }}</span>
+                              <span class="event-date">{{ formatEventDate(event.date) }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Polls -->
+                      <div class="event-type-card" *ngIf="getEventsByType(element.events, 'poll').length > 0">
+                        <div class="event-type-header purple">
+                          <span class="event-type-badge purple">
+                            <mat-icon>poll</mat-icon>
+                          </span>
+                          <span>Enquetes</span>
+                        </div>
+                        <div class="event-list">
+                          <div class="event-item" *ngFor="let event of getEventsByType(element.events, 'poll')">
+                            <mat-icon [ngClass]="event.participated ? 'participated' : 'not-participated'">
+                              {{ event.participated ? 'check_circle' : 'cancel' }}
+                            </mat-icon>
+                            <div class="event-info">
+                              <span class="event-title">{{ event.title }}</span>
+                              <span class="event-date">{{ formatEventDate(event.date) }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Other Events -->
+                      <div class="event-type-card" *ngIf="getEventsByType(element.events, 'other').length > 0">
+                        <div class="event-type-header orange">
+                          <span class="event-type-badge orange">
+                            <mat-icon>event</mat-icon>
+                          </span>
+                          <span>Outros Eventos</span>
+                        </div>
+                        <div class="event-list">
+                          <div class="event-item" *ngFor="let event of getEventsByType(element.events, 'other')">
+                            <mat-icon [ngClass]="event.participated ? 'participated' : 'not-participated'">
+                              {{ event.participated ? 'check_circle' : 'cancel' }}
+                            </mat-icon>
+                            <div class="event-info">
+                              <span class="event-title">{{ event.title }}</span>
+                              <span class="event-date">{{ formatEventDate(event.date) }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Late Payments Section -->
+                  <div class="detail-section payments-section">
+                    <h4 class="section-title">
+                      <mat-icon>payments</mat-icon>
+                      Situação de Mensalidades
+                    </h4>
+
+                    <div class="payments-content" *ngIf="element.latePayments.length === 0">
+                      <div class="no-late-payments">
+                        <mat-icon class="success-icon">verified</mat-icon>
+                        <span>Nenhum atraso de mensalidade registrado! 🎉</span>
+                      </div>
+                    </div>
+
+                    <div class="payments-content" *ngIf="element.latePayments.length > 0">
+                      <div class="late-payments-list">
+                        <div class="late-payment-item" *ngFor="let payment of element.latePayments">
+                          <mat-icon class="warning-icon">warning</mat-icon>
+                          <div class="payment-info">
+                            <span class="payment-period">{{ getMonthName(payment.month) }}/{{ payment.year }}</span>
+                            <span class="payment-status" *ngIf="payment.paidAt">
+                              Pago em atraso: {{ formatEventDate(payment.paidAt) }}
+                            </span>
+                            <span class="payment-status pending" *ngIf="!payment.paidAt">
+                              Pendente
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngClass]="{ 'highlight-row': row.totalScore === 4 }"></tr>
+            class="element-row"
+            [ngClass]="{ 'highlight-row': row.totalScore === 4, 'expanded-row': expandedElement === row }"
+            (click)="toggleRow(row, $event)">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row-container"></tr>
         </table>
       </mat-card>
 
