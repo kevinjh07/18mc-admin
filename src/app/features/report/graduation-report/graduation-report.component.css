@@ -1,0 +1,362 @@
+.container {
+  padding: 20px;
+}
+
+/* Header */
+.header-section {
+  margin-bottom: 24px;
+}
+
+.header-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+.page-title {
+  margin: 0;
+  font-weight: 400;
+  color: #333;
+}
+
+/* Filter Card */
+.filter-card {
+  margin-bottom: 24px;
+}
+
+.filter-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.filter-card mat-card-title mat-icon {
+  color: #3f51b5;
+}
+
+.filter-actions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Period Info */
+.period-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #e8eaf6;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  color: #3f51b5;
+}
+
+.period-info mat-icon {
+  color: #3f51b5;
+}
+
+/* Summary Cards */
+.summary-section {
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+.summary-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+.summary-icon.blue {
+  background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
+}
+
+.summary-icon.purple {
+  background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+}
+
+.summary-icon.orange {
+  background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+}
+
+.summary-icon.green {
+  background: linear-gradient(135deg, #388e3c 0%, #4caf50 100%);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Legend Card */
+.legend-card {
+  padding: 16px;
+  margin-bottom: 24px;
+  background: #fafafa;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.legend-icon.blue {
+  color: #3f51b5;
+}
+
+.legend-icon.purple {
+  color: #9c27b0;
+}
+
+.legend-icon.orange {
+  color: #ff9800;
+}
+
+.legend-icon.green {
+  color: #4caf50;
+}
+
+/* Table Card */
+.table-card {
+  overflow: hidden;
+}
+
+.graduation-table {
+  width: 100%;
+}
+
+/* Position Column */
+.position-column {
+  width: 60px;
+  text-align: center;
+}
+
+.position-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+}
+
+.position-badge.gold {
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+  color: #5d4e00;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+}
+
+.position-badge.silver {
+  background: linear-gradient(135deg, #c0c0c0 0%, #9e9e9e 100%);
+  color: #424242;
+}
+
+.position-badge.bronze {
+  background: linear-gradient(135deg, #cd7f32 0%, #a0522d 100%);
+  color: white;
+}
+
+/* Name Cell */
+.name-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.short-name {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Score Columns */
+.score-column {
+  width: 80px;
+  text-align: center;
+}
+
+.column-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.column-icon.blue {
+  color: #3f51b5;
+}
+
+.column-icon.purple {
+  color: #9c27b0;
+}
+
+.column-icon.orange {
+  color: #ff9800;
+}
+
+.column-icon.green {
+  color: #4caf50;
+}
+
+.score-success {
+  color: #4caf50 !important;
+}
+
+.score-fail {
+  color: #f44336 !important;
+}
+
+/* Total Column */
+.total-column {
+  width: 120px;
+}
+
+.total-score-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.total-value {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.total-excellent {
+  color: #4caf50;
+}
+
+.total-good {
+  color: #8bc34a;
+}
+
+.total-average {
+  color: #ff9800;
+}
+
+.total-low {
+  color: #f44336;
+}
+
+.total-score-cell mat-progress-bar {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.total-score-cell mat-progress-bar.total-excellent ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #4caf50;
+}
+
+.total-score-cell mat-progress-bar.total-good ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #8bc34a;
+}
+
+.total-score-cell mat-progress-bar.total-average ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #ff9800;
+}
+
+.total-score-cell mat-progress-bar.total-low ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #f44336;
+}
+
+/* Highlight Row */
+.highlight-row {
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.08) 0%, rgba(76, 175, 80, 0.02) 100%);
+}
+
+.highlight-row:hover {
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.05) 100%) !important;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  text-align: center;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .summary-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .position-column,
+  .score-column {
+    width: auto;
+    min-width: 50px;
+  }
+
+  .total-column {
+    width: auto;
+    min-width: 80px;
+  }
+}

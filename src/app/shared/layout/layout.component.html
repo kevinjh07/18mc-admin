@@ -85,6 +85,11 @@
           <p mat-line>Integrantes</p>
         </a>
 
+        <a [role]="['admin']" mat-list-item [routerLink]="['/report/graduation']" routerLinkActive="active">
+          <mat-icon mat-list-icon> school </mat-icon>
+          <p mat-line>Relatório de Graduação</p>
+        </a>
+
         <a mat-list-item [routerLink]="['/auth/login']">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>
           <p mat-line>Sair</p>

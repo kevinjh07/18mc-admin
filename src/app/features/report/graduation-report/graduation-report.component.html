@@ -1,0 +1,249 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="97%">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="header-section">
+      <mat-icon class="header-icon" color="primary">school</mat-icon>
+      <h2 class="page-title">Relatório de Graduação</h2>
+    </div>
+
+    <mat-card class="filter-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>filter_list</mat-icon>
+          Filtros
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="filterForm">
+          <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="16px">
+            <mat-form-field fxFlex="20" fxFlex.lt-md="100">
+              <mat-label>Comando</mat-label>
+              <mat-select formControlName="commandId" (selectionChange)="onCommandChange()">
+                <mat-option *ngFor="let command of commands" [value]="command.id">
+                  {{ command.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20" fxFlex.lt-md="100">
+              <mat-label>Regional</mat-label>
+              <mat-select formControlName="regionalId" (selectionChange)="onRegionalChange()">
+                <mat-option *ngFor="let regional of regionals" [value]="regional.id">
+                  {{ regional.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20" fxFlex.lt-md="100">
+              <mat-label>Divisão</mat-label>
+              <mat-select formControlName="divisionId">
+                <mat-option *ngFor="let division of divisions" [value]="division.id">
+                  {{ division.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="15" fxFlex.lt-md="100">
+              <mat-label>Data Início</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="15" fxFlex.lt-md="100">
+              <mat-label>Data Fim</mat-label>
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px" class="filter-actions">
+            <button mat-raised-button color="primary" (click)="generateReport()" [disabled]="filterForm.invalid">
+              <mat-icon>assessment</mat-icon>
+              Gerar Relatório
+            </button>
+            <button mat-raised-button color="accent" (click)="exportToPdf()" [disabled]="!reportGenerated || reportData.length === 0">
+              <mat-icon>picture_as_pdf</mat-icon>
+              Exportar PDF
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Report Content -->
+    <div *ngIf="reportGenerated" class="report-content" [@fadeIn]>
+      <!-- Period Info -->
+      <div class="period-info" *ngIf="reportPeriod">
+        <mat-icon>date_range</mat-icon>
+        <span>Período: <strong>{{ reportPeriod.start }}</strong> a <strong>{{ reportPeriod.end }}</strong></span>
+      </div>
+
+      <!-- Summary Cards -->
+      <div fxLayout="row wrap" fxLayoutGap="16px" class="summary-section">
+        <mat-card class="summary-card" fxFlex="calc(25% - 16px)" fxFlex.lt-md="calc(50% - 16px)">
+          <div class="summary-icon blue">
+            <mat-icon>groups</mat-icon>
+          </div>
+          <div class="summary-content">
+            <span class="summary-label">Total de Integrantes</span>
+            <span class="summary-value">{{ totalMembers }}</span>
+          </div>
+        </mat-card>
+
+        <mat-card class="summary-card" fxFlex="calc(25% - 16px)" fxFlex.lt-md="calc(50% - 16px)">
+          <div class="summary-icon purple">
+            <mat-icon>analytics</mat-icon>
+          </div>
+          <div class="summary-content">
+            <span class="summary-label">Média de Pontos</span>
+            <span class="summary-value">{{ avgScore }}</span>
+          </div>
+        </mat-card>
+
+        <mat-card class="summary-card" fxFlex="calc(25% - 16px)" fxFlex.lt-md="calc(50% - 16px)">
+          <div class="summary-icon orange">
+            <mat-icon>emoji_events</mat-icon>
+          </div>
+          <div class="summary-content">
+            <span class="summary-label">Pontuação Máxima</span>
+            <span class="summary-value">{{ maxScore }}</span>
+          </div>
+        </mat-card>
+
+        <mat-card class="summary-card" fxFlex="calc(25% - 16px)" fxFlex.lt-md="calc(50% - 16px)">
+          <div class="summary-icon green">
+            <mat-icon>star</mat-icon>
+          </div>
+          <div class="summary-content">
+            <span class="summary-label">Integrantes com 4 Pontos</span>
+            <span class="summary-value">{{ perfectScoreCount }}</span>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Legend -->
+      <mat-card class="legend-card">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="24px">
+          <div class="legend-item">
+            <mat-icon class="legend-icon blue">diversity_3</mat-icon>
+            <span>Ação Social</span>
+          </div>
+          <div class="legend-item">
+            <mat-icon class="legend-icon purple">poll</mat-icon>
+            <span>Enquete</span>
+          </div>
+          <div class="legend-item">
+            <mat-icon class="legend-icon orange">event</mat-icon>
+            <span>Outros Eventos</span>
+          </div>
+          <div class="legend-item">
+            <mat-icon class="legend-icon green">payments</mat-icon>
+            <span>Mensalidade</span>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Data Table -->
+      <mat-card class="table-card" *ngIf="reportData.length > 0">
+        <table mat-table [dataSource]="reportData" class="graduation-table">
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef class="position-column">#</th>
+            <td mat-cell *matCellDef="let element; let i = index" class="position-column">
+              <span class="position-badge" [ngClass]="{ 'gold': i === 0, 'silver': i === 1, 'bronze': i === 2 }">
+                {{ i + 1 }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="name-cell">
+                <span class="full-name">{{ element.fullName }}</span>
+                <span class="short-name">{{ element.shortName }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Social Action Column -->
+          <ng-container matColumnDef="socialAction">
+            <th mat-header-cell *matHeaderCellDef class="score-column">
+              <mat-icon class="column-icon blue">diversity_3</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element" class="score-column">
+              <mat-icon [ngClass]="getScoreClass(element.scores.socialAction)">
+                {{ element.scores.socialAction === 1 ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
+          <!-- Poll Column -->
+          <ng-container matColumnDef="poll">
+            <th mat-header-cell *matHeaderCellDef class="score-column">
+              <mat-icon class="column-icon purple">poll</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element" class="score-column">
+              <mat-icon [ngClass]="getScoreClass(element.scores.poll)">
+                {{ element.scores.poll === 1 ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
+          <!-- Other Events Column -->
+          <ng-container matColumnDef="otherEvents">
+            <th mat-header-cell *matHeaderCellDef class="score-column">
+              <mat-icon class="column-icon orange">event</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element" class="score-column">
+              <mat-icon [ngClass]="getScoreClass(element.scores.otherEvents)">
+                {{ element.scores.otherEvents === 1 ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
+          <!-- Payments Column -->
+          <ng-container matColumnDef="payments">
+            <th mat-header-cell *matHeaderCellDef class="score-column">
+              <mat-icon class="column-icon green">payments</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element" class="score-column">
+              <mat-icon [ngClass]="getScoreClass(element.scores.payments)">
+                {{ element.scores.payments === 1 ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </td>
+          </ng-container>
+
+          <!-- Total Score Column -->
+          <ng-container matColumnDef="totalScore">
+            <th mat-header-cell *matHeaderCellDef class="total-column">Total</th>
+            <td mat-cell *matCellDef="let element" class="total-column">
+              <div class="total-score-cell">
+                <span class="total-value" [ngClass]="getTotalScoreClass(element.totalScore)">
+                  {{ element.totalScore }}
+                </span>
+                <mat-progress-bar
+                  [value]="getProgressValue(element.totalScore)"
+                  [ngClass]="getTotalScoreClass(element.totalScore)"
+                  mode="determinate">
+                </mat-progress-bar>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{ 'highlight-row': row.totalScore === 4 }"></tr>
+        </table>
+      </mat-card>
+
+      <!-- Empty State -->
+      <mat-card class="empty-state" *ngIf="reportData.length === 0">
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+        <h3>Nenhum dado encontrado</h3>
+        <p>Não há integrantes cadastrados nesta divisão para o período selecionado.</p>
+      </mat-card>
+    </div>
+  </div>
+</div>

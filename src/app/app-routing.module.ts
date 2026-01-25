@@ -54,9 +54,13 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "**",
+    path: "",
     redirectTo: "social-action",
     pathMatch: "full",
+  },
+  {
+    path: "**",
+    redirectTo: "social-action",
   },
 ];
 
