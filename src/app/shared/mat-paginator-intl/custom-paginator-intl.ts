@@ -1,4 +1,4 @@
-import { MatPaginatorIntl } from "@angular/material/paginator";
+import { MatLegacyPaginatorIntl as MatPaginatorIntl } from "@angular/material/legacy-paginator";
 
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   override itemsPerPageLabel = "Itens por página";

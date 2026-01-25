@@ -1,5 +1,14 @@
 @use '@angular/material' as mat;
-@include mat.core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 // Paleta de cores baseada no tema Gemini
 $gemini-primary: mat.define-palette(mat.$blue-grey-palette, 900);
@@ -12,12 +21,12 @@ $gemini-theme: mat.define-dark-theme((
     accent: $gemini-accent,
     warn: $gemini-warn
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.define-legacy-typography-config(),
   density: 0
 ));
 
 // Aplica o tema a todos os componentes do Angular Material
-@include mat.all-component-themes($gemini-theme);
+@include mat.all-legacy-component-themes($gemini-theme);
 
 // Definição de variáveis CSS para personalização extra
 :root {
