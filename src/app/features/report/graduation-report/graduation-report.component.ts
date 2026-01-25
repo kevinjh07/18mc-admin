@@ -79,7 +79,7 @@ export class GraduationReportComponent implements OnInit {
   avgScore = 0;
   perfectScoreCount = 0;
 
-  displayedColumns: string[] = ['position', 'fullName', 'socialAction', 'poll', 'otherEvents', 'payments', 'totalScore', 'directorVote'];
+  displayedColumns: string[] = ['position', 'fullName', 'socialAction', 'poll', 'otherEvents', 'payments', 'directorVote', 'totalScore'];
 
   constructor(
     private fb: FormBuilder,
@@ -292,8 +292,8 @@ export class GraduationReportComponent implements OnInit {
           <td style="text-align: center;">${item.scores.poll === 1 ? '✓' : '✗'}</td>
           <td style="text-align: center;">${item.scores.otherEvents === 1 ? '✓' : '✗'}</td>
           <td style="text-align: center;">${item.scores.payments === 1 ? '✓' : '✗'}</td>
-          <td style="text-align: center; font-weight: bold;">${adjustedTotal}</td>
           <td style="text-align: center; font-weight: bold; color: #3f51b5;">${hasVote ? '✓' : '-'}</td>
+          <td style="text-align: center; font-weight: bold;">${adjustedTotal}</td>
         </tr>
       `;
     });
@@ -341,8 +341,8 @@ export class GraduationReportComponent implements OnInit {
               <th style="width: 100px;">Enquete</th>
               <th style="width: 100px;">Eventos</th>
               <th style="width: 100px;">Mensalidade</th>
-              <th style="width: 80px;">Total</th>
               <th style="width: 80px;">Voto do Diretor</th>
+              <th style="width: 80px;">Total</th>
             </tr>
           </thead>
           <tbody>
