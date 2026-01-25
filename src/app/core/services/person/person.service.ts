@@ -35,11 +35,10 @@ export class PersonService {
     return this.http.put(`${environment.baseUrl}/persons/${person.id}`, person);
   }
 
-  getPayments(personId: number, year?: number) {
-    let queryParams: any = {};
-    if (year) queryParams.year = year;
+  getPayments(personId: number, page: number = 1, limit: number = 5) {
+    let queryParams: any = { page, limit };
     const queryString = new URLSearchParams(queryParams).toString();
-    return this.http.get<Payment[]>(`${environment.baseUrl}/persons/${personId}/late-payments${queryString ? '?' + queryString : ''}`);
+    return this.http.get<{ data: Payment[], total: number }>(`${environment.baseUrl}/persons/${personId}/late-payments?${queryString}`);
   }
 
   savePayment(personId: number, payment: Partial<Payment>) {

@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from 'src/app/core/services/person/person.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NGXLogger } from 'ngx-logger';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-person-late-payment-dialog',
@@ -13,9 +14,13 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class PersonLatePaymentDialogComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   formGroup: FormGroup;
   latePayments: any[] = [];
   personId: number;
+  totalItems: number = 0;
+  pageSize: number = 5;
+  currentPage: number = 0;
   months = [
     { value: 1, name: 'Janeiro' },
     { value: 2, name: 'Fevereiro' },
@@ -54,10 +59,15 @@ export class PersonLatePaymentDialogComponent implements OnInit {
 
   loadPayments() {
     this.blockUI.start('Carregando atrasos de mensalidade...');
-    this.personService.getPayments(this.personId).subscribe({
-      next: (payments) => {
+    this.personService.getPayments(this.personId, this.currentPage + 1, this.pageSize).subscribe({
+      next: (response: any) => {
         this.blockUI.stop();
-        this.latePayments = payments;
+        setTimeout(() => {
+            this.paginator.length = response?.totalItems;
+            this.paginator.pageIndex = response?.currentPage - 1;
+        }, 100);
+        this.latePayments = response.data;
+        this.totalItems = response.total;
       },
       error: (e) => {
         this.blockUI.stop();
@@ -65,6 +75,12 @@ export class PersonLatePaymentDialogComponent implements OnInit {
         this.notificationService.openSnackBar('Erro ao carregar atrasos de mensalidade');
       }
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadPayments();
   }
 
   savePayment() {
@@ -75,6 +91,10 @@ export class PersonLatePaymentDialogComponent implements OnInit {
         next: () => {
           this.blockUI.stop();
           this.notificationService.openSnackBar('Atraso de mensalidade salvo com sucesso');
+          this.currentPage = 0;
+          if (this.paginator) {
+            this.paginator.firstPage();
+          }
           this.loadPayments();
           this.formGroup.reset({
             year: new Date().getFullYear(),
