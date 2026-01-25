@@ -441,6 +441,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .filter-actions {
+    justify-content: center !important;
+  }
+
   .summary-section {
     padding-bottom: 8px;
   }
