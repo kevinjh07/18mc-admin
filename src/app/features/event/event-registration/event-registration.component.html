@@ -1,44 +1,50 @@
-<mat-toolbar>
-  <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  {{ event.id == null ? "Cadastrar Evento" : "Editar Evento" }}
-</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-toolbar>
+      <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      {{ event.id == null ? "Cadastrar Evento" : "Editar Evento" }}
+    </mat-toolbar>
+  </div>
+</div>
 
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-    <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab label="Dados do evento">
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
-            <mat-form-field [fxFlex]="50">
-              <mat-label required>Título</mat-label>
-              <input
-                matInput
-                type="text"
-                formControlName="title"
-                maxlength="150"
-                required
-              />
-              <mat-error *ngIf="formGroup.controls['title'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+    <mat-card>
+      <mat-card-content>
+        <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
+          <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Dados do evento">
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label required>Título</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="title"
+                    maxlength="150"
+                    required
+                  />
+                  <mat-error *ngIf="formGroup.controls['title'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="50">
-              <mat-label required>Data</mat-label>
-              <input
-                matInput
-                [matDatepicker]="date"
-                formControlName="date"
-                (click)="date.open()"
-                required
-              />
-              <mat-datepicker-toggle matSuffix [for]="date"> </mat-datepicker-toggle>
-              <mat-datepicker #date></mat-datepicker>
-              <mat-error *ngIf="formGroup.controls['date'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label required>Data</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="date"
+                    formControlName="date"
+                    (click)="date.open()"
+                    required
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="date"> </mat-datepicker-toggle>
+                  <mat-datepicker #date></mat-datepicker>
+                  <mat-error *ngIf="formGroup.controls['date'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
@@ -120,5 +126,5 @@
         </button>
       </div>
     </form>
-  </div>
-</div>
+    </mat-card-content>
+  </mat-card>

@@ -1,38 +1,46 @@
-<mat-toolbar>
-  <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  {{ class.id == null ? "Cadastrar Modalidade" : "Editar Modalidade" }}
-</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-toolbar>
+      <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      {{ class.id == null ? "Cadastrar Modalidade" : "Editar Modalidade" }}
+    </mat-toolbar>
+  </div>
+</div>
 
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-    <form [formGroup]="formGroup" (ngSubmit)="saveStudent()">
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-        <mat-form-field [fxFlex]="30">
-          <input
-            matInput
-            placeholder="Nome"
-            type="text"
-            formControlName="name"
-            [(ngModel)]="class.name"
-            maxlength="255"
-            required
-          />
-          <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
-        </mat-form-field>
-      </div>
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="formGroup" (ngSubmit)="saveStudent()">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+            <mat-form-field [fxFlex]="30">
+              <input
+                matInput
+                placeholder="Nome"
+                type="text"
+                formControlName="name"
+                [(ngModel)]="class.name"
+                maxlength="255"
+                required
+              />
+              <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
+            </mat-form-field>
+          </div>
 
-      <div class="mt-15 mb-15">
-        <button mat-flat-button color="primary">
-          <mat-icon>save</mat-icon>
-          Salvar
-        </button>
-        <button mat-flat-button type="button" [routerLink]="['/classes']">
-          <mat-icon>close</mat-icon>
-          Cancelar
-        </button>
-      </div>
-    </form>
+          <div class="mt-15 mb-15">
+            <button mat-flat-button color="primary">
+              <mat-icon>save</mat-icon>
+              Salvar
+            </button>
+            <button mat-flat-button type="button" [routerLink]="['/classes']">
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

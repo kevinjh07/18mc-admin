@@ -261,5 +261,9 @@ export class PollRegistrationComponent implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

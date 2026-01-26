@@ -160,5 +160,9 @@ export class DivisionRegistrationComponent implements OnInit {
     this.formGroup.patchValue({ regionalId: '' });
     this.getRegionals();
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

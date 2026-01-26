@@ -1,121 +1,101 @@
-<mat-toolbar>
-  {{ poll.id == null ? "Cadastrar Enquete" : "Editar Enquete" }}
-</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <mat-toolbar>
+      <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      {{ poll.id == null ? "Cadastrar Enquete" : "Editar Enquete" }}
+    </mat-toolbar>
+  </div>
+</div>
 
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-    <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab label="Dados da enquete">
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
-            <mat-form-field [fxFlex]="50">
-              <mat-label required>Título</mat-label>
-              <input
-                matInput
-                type="text"
-                formControlName="title"
-                maxlength="150"
-                required
-              />
-              <mat-error *ngIf="formGroup.controls['title'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+    <mat-card>
+      <mat-card-content>
+        <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
+          <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Dados da enquete">
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label required>Título</mat-label>
+                  <input matInput type="text" formControlName="title" maxlength="150" required />
+                  <mat-error *ngIf="formGroup.controls['title'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="50">
-              <mat-label required>Data</mat-label>
-              <input
-                matInput
-                [matDatepicker]="date"
-                formControlName="date"
-                (click)="date.open()"
-                required
-              />
-              <mat-datepicker-toggle matSuffix [for]="date"> </mat-datepicker-toggle>
-              <mat-datepicker #date></mat-datepicker>
-              <mat-error *ngIf="formGroup.controls['date'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label required>Data</mat-label>
+                  <input matInput [matDatepicker]="date" formControlName="date" (click)="date.open()" required />
+                  <mat-datepicker-toggle matSuffix [for]="date"> </mat-datepicker-toggle>
+                  <mat-datepicker #date></mat-datepicker>
+                  <mat-error *ngIf="formGroup.controls['date'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="50">
-              <mat-label required>Comando</mat-label>
-              <mat-select
-                formControlName="commandId"
-                (selectionChange)="onCommandChange()"
-                required
-              >
-                <mat-option *ngFor="let command of commands" [value]="command.id">
-                  {{ command.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="formGroup.controls['commandId'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label required>Comando</mat-label>
+                  <mat-select formControlName="commandId" (selectionChange)="onCommandChange()" required>
+                    <mat-option *ngFor="let command of commands" [value]="command.id">
+                      {{ command.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroup.controls['commandId'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="50">
-              <mat-label>Regional</mat-label>
-              <mat-select
-                formControlName="regionalId"
-                (selectionChange)="onRegionalChange()"
-                required
-              >
-                <mat-option *ngFor="let regional of regionals" [value]="regional.id">{{ regional.name }}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="formGroup.controls['regionalId'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label>Regional</mat-label>
+                  <mat-select formControlName="regionalId" (selectionChange)="onRegionalChange()" required>
+                    <mat-option *ngFor="let regional of regionals" [value]="regional.id">{{ regional.name
+                      }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroup.controls['regionalId'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="50">
-              <mat-label>Divisão</mat-label>
-              <mat-select formControlName="divisionId" required>
-                <mat-option *ngFor="let division of divisions" [value]="division.id">{{ division.name }}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="formGroup.controls['divisionId'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="50">
+                  <mat-label>Divisão</mat-label>
+                  <mat-select formControlName="divisionId" required>
+                    <mat-option *ngFor="let division of divisions" [value]="division.id">{{ division.name
+                      }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroup.controls['divisionId'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-            <mat-form-field [fxFlex]="100">
-              <mat-label required>Descrição</mat-label>
-              <textarea
-                matInput
-                formControlName="description"
-                [maxLength]="1000"
-                cols="40"
-                rows="7"
-              ></textarea>
-              <mat-hint align="end">{{ formGroup.get('description')?.value?.length || 0 }} / 1000</mat-hint>
-              <mat-error *ngIf="formGroup.controls['description'].invalid">Campo obrigatório</mat-error>
-            </mat-form-field>
-          </div>
-        </mat-tab>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <mat-form-field [fxFlex]="100">
+                  <mat-label required>Descrição</mat-label>
+                  <textarea matInput formControlName="description" [maxLength]="1000" cols="40" rows="7"></textarea>
+                  <mat-hint align="end">{{ formGroup.get('description')?.value?.length || 0 }} / 1000</mat-hint>
+                  <mat-error *ngIf="formGroup.controls['description'].invalid">Campo obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+            </mat-tab>
 
-        <mat-tab *ngIf="poll.id" label="Participantes">
-          <div class="mt-2pct">
-            <dual-list
-              [source]="availablePerson"
-              [(destination)]="selectedPerson"
-              [format]="format"
-              [key]="'id'"
-              [display]="'shortName'"
-            ></dual-list>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+            <mat-tab *ngIf="poll.id" label="Participantes">
+              <div class="mt-2pct">
+                <dual-list [source]="availablePerson" [(destination)]="selectedPerson" [format]="format" [key]="'id'"
+                  [display]="'shortName'"></dual-list>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
 
-      <div class="action-buttons">
-        <button mat-flat-button color="primary">
-          <mat-icon>save</mat-icon>
-          Salvar
-        </button>
-        <button mat-flat-button type="button" [routerLink]="['/poll']">
-          <mat-icon>close</mat-icon>
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+          <div class="action-buttons">
+            <button mat-flat-button color="primary">
+              <mat-icon>save</mat-icon>
+              Salvar
+            </button>
+            <button mat-flat-button type="button" [routerLink]="['/poll']">
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>

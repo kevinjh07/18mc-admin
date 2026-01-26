@@ -1,85 +1,93 @@
-<mat-toolbar>
-    <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    {{ !isEditMode ? "Cadastrar Usuário" : "Editar Usuário" }}
-</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-toolbar>
+            <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            {{ !isEditMode ? "Cadastrar Usuário" : "Editar Usuário" }}
+        </mat-toolbar>
+    </div>
+</div>
 
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="95%">
-        <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                <mat-form-field [fxFlex]="50">
-                    <input matInput placeholder="Nome" type="text" formControlName="name"
-                        maxlength="150" required />
-                    <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
-                </mat-form-field>
-            </div>
+                <mat-card>
+                    <mat-card-content>
+                        <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
+                            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                <mat-form-field [fxFlex]="50">
+                                    <input matInput placeholder="Nome" type="text" formControlName="name"
+                                            maxlength="150" required />
+                                    <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
+                                </mat-form-field>
+                            </div>
 
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                <mat-form-field [fxFlex]="50">
-                    <input matInput placeholder="E-mail" type="email" formControlName="email"
-                        maxlength="150" required />
-                    <mat-error *ngIf="formGroup.controls['email'].invalid">Campo obrigatório</mat-error>
-                </mat-form-field>
-            </div>
+                            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                <mat-form-field [fxFlex]="50">
+                                    <input matInput placeholder="E-mail" type="email" formControlName="email"
+                                            maxlength="150" required />
+                                    <mat-error *ngIf="formGroup.controls['email'].invalid">Campo obrigatório</mat-error>
+                                </mat-form-field>
+                            </div>
 
-            <div *ngIf="!isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                <mat-form-field [fxFlex]="50">
-                    <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Senha"
-                        formControlName="password" maxlength="150" required />
-                    <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
-                        <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="formGroup.controls['password'].invalid">
-                        <ng-container *ngIf="formGroup.controls['password'].errors?.['required']">Campo
-                            obrigatório</ng-container>
-                        <ng-container *ngIf="formGroup.controls['password'].errors?.['minlength']">Mínimo 6 caracteres
-                        </ng-container>
-                        <ng-container *ngIf="formGroup.controls['password'].errors?.['maxlength']">Máximo 20 caracteres
-                        </ng-container>
-                        <ng-container *ngIf="formGroup.controls['password'].errors?.['pattern']">Pelo menos 1 letra
-                            maiúscula e 1 número </ng-container>
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                            <div *ngIf="!isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                <mat-form-field [fxFlex]="50">
+                                    <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Senha"
+                                            formControlName="password" maxlength="150" required />
+                                    <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+                                        <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="formGroup.controls['password'].invalid">
+                                        <ng-container *ngIf="formGroup.controls['password'].errors?.['required']">Campo
+                                                obrigatório</ng-container>
+                                        <ng-container *ngIf="formGroup.controls['password'].errors?.['minlength']">Mínimo 6 caracteres
+                                        </ng-container>
+                                        <ng-container *ngIf="formGroup.controls['password'].errors?.['maxlength']">Máximo 20 caracteres
+                                        </ng-container>
+                                        <ng-container *ngIf="formGroup.controls['password'].errors?.['pattern']">Pelo menos 1 letra
+                                                maiúscula e 1 número </ng-container>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
 
-            <div *ngIf="!isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                <mat-form-field [fxFlex]="50">
-                    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirmar Senha"
-                        formControlName="confirmPassword" maxlength="150" required />
-                    <button mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()" type="button">
-                        <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="formGroup.controls['confirmPassword'].invalid">
-                        <ng-container *ngIf="formGroup.controls['confirmPassword'].errors?.['required']">Campo
-                            obrigatório </ng-container>
-                        <ng-container *ngIf="formGroup.errors?.['mismatch']">As senhas não coincidem </ng-container>
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                            <div *ngIf="!isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                <mat-form-field [fxFlex]="50">
+                                    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirmar Senha"
+                                            formControlName="confirmPassword" maxlength="150" required />
+                                    <button mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()" type="button">
+                                        <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="formGroup.controls['confirmPassword'].invalid">
+                                        <ng-container *ngIf="formGroup.controls['confirmPassword'].errors?.['required']">Campo
+                                                obrigatório </ng-container>
+                                        <ng-container *ngIf="formGroup.errors?.['mismatch']">As senhas não coincidem </ng-container>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
 
-            <div *ngIf="isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-                <mat-form-field [fxFlex]="50">
-                    <mat-select placeholder="Situação" formControlName="isActive" required
-                        [compareWith]="compareWith">
-                        <mat-option [value]="true">Ativo</mat-option>
-                        <mat-option [value]="false">Inativo</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.controls['isActive'].invalid">Campo obrigatório</mat-error>
-                </mat-form-field>
-            </div>
+                            <div *ngIf="isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                                <mat-form-field [fxFlex]="50">
+                                    <mat-select placeholder="Situação" formControlName="isActive" required
+                                            [compareWith]="compareWith">
+                                            <mat-option [value]="true">Ativo</mat-option>
+                                            <mat-option [value]="false">Inativo</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="formGroup.controls['isActive'].invalid">Campo obrigatório</mat-error>
+                                </mat-form-field>
+                            </div>
 
-            <div class="action-buttons">
-                <button mat-flat-button color="primary">
-                    <mat-icon>save</mat-icon>
-                    Salvar
-                </button>
-                <button mat-flat-button type="button" [routerLink]="['/user']">
-                    <mat-icon>close</mat-icon>
-                    Cancelar
-                </button>
-            </div>
-        </form>
+                            <div class="action-buttons">
+                                <button mat-flat-button color="primary">
+                                    <mat-icon>save</mat-icon>
+                                    Salvar
+                                </button>
+                                <button mat-flat-button type="button" [routerLink]="['/user']">
+                                    <mat-icon>close</mat-icon>
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </mat-card-content>
+                </mat-card>
     </div>
 </div>
