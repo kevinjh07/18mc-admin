@@ -4,7 +4,7 @@
       <button mat-mini-fab color="primary" (click)="goBack()" matTooltip="Voltar para lista">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <h2 style="margin: 0;">Ações Sociais - Divisão</h2>
+      <h2 class="title-no-margin">Ações Sociais - Divisão</h2>
     </div>
 
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
@@ -51,7 +51,7 @@
           <ngx-charts-bar-horizontal [results]="socialActions" [scheme]="'vivid'" [yAxis]="true"
             [showXAxisLabel]="true" [showDataLabel]="true" [roundDomains]="true">
           </ngx-charts-bar-horizontal>
-          <h4 style="padding-left: 1%;">Total: {{totalSocialActions}} </h4>
+          <h4 class="pl-1pct">Total: {{totalSocialActions}} </h4>
         </div>
       </mat-tab>
 
@@ -77,7 +77,7 @@
             [scheme]="'vivid'" [yAxis]="true" [showYAxisLabel]="false">
           </ngx-charts-bar-horizontal-2d>
 
-          <h4 style="padding-left: 1%;">Total: {{totalSocialActionsByType}} </h4>
+          <h4 class="pl-1pct">Total: {{totalSocialActionsByType}} </h4>
         </div>
       </mat-tab>
     </mat-tab-group>

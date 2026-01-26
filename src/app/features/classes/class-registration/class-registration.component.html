@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <button mat-mini-fab color="primary" style="margin-right: 12px;" (click)="goBack()">
+  <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
   {{ class.id == null ? "Cadastrar Modalidade" : "Editar Modalidade" }}
@@ -23,7 +23,7 @@
         </mat-form-field>
       </div>
 
-      <div style="margin-top: 15px; margin-bottom: 15px">
+      <div class="mt-15 mb-15">
         <button mat-flat-button color="primary">
           <mat-icon>save</mat-icon>
           Salvar

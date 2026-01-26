@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <button mat-mini-fab color="primary" style="margin-right: 12px;" (click)="goBack()">
+  <button mat-mini-fab color="primary" class="btn-back" (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
   {{ socialAction.id == null ? "Cadastrar Ação Social" : "Editar Ação Social" }}
@@ -10,7 +10,7 @@
     <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Dados da ação">
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" style="margin-top: 2%">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
             <mat-form-field [fxFlex]="50">
               <mat-label required>Título</mat-label>
               <input
@@ -109,7 +109,7 @@
         </mat-tab>
 
         <mat-tab *ngIf="socialAction.id" label="Participantes">
-          <div style="margin-top: 2%">
+          <div class="mt-2pct">
             <dual-list
               [source]="availablePerson"
               [(destination)]="selectedPerson"

@@ -1,3 +1,46 @@
+.flex-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-no-margin {
+  margin: 0;
+}
+
+.btn-back {
+  margin-right: 12px;
+}
+
+.btn-add {
+  margin-left: 5px;
+}
+
+.mt-2pct {
+  margin-top: 2%;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.pl-1pct {
+  padding-left: 1%;
+}
+
+.center-block {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.mb-5pct {
+  margin-bottom: 5%;
+}
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 
 body {

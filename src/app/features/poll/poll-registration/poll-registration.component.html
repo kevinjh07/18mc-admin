@@ -7,7 +7,7 @@
     <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Dados da enquete">
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" style="margin-top: 2%">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="mt-2pct">
             <mat-form-field [fxFlex]="50">
               <mat-label required>Título</mat-label>
               <input
@@ -94,7 +94,7 @@
         </mat-tab>
 
         <mat-tab *ngIf="poll.id" label="Participantes">
-          <div style="margin-top: 2%">
+          <div class="mt-2pct">
             <dual-list
               [source]="availablePerson"
               [(destination)]="selectedPerson"
