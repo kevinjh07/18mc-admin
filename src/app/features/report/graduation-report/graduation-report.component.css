@@ -1,22 +1,10 @@
-.container {
-  padding: 20px;
-}
-
 /* Header */
 .header-section {
   padding: 20px;
 }
 
-.header-icon {
-  font-size: 36px;
-  width: 36px;
-  height: 36px;
-  color: white;
-}
-
 .page-title {
   margin: 0;
-  font-weight: 400;
   color: white;
 }
 
