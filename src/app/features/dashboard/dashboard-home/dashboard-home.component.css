@@ -65,3 +65,14 @@
   background-color: #2196f3;
   margin-right: 8px;
 }
+
+/* Mat-Tab custom white text and indicator for dark background */
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: white !important;
+}
+::ng-deep .mdc-tab-indicator__content--underline {
+  border-color: white !important;
+}
