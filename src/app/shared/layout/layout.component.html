@@ -1,7 +1,7 @@
 <div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches">
   <!-- Top navbar -->
   <mat-toolbar class="navbar" color="primary">
-    <button mat-icon-button (click)="snav.toggle()">
+    <button mat-icon-button (click)="snav.toggle()" #menuBtn>
       <mat-icon>menu</mat-icon>
     </button>
 

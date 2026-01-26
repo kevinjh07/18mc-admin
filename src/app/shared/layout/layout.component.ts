@@ -1,72 +1,111 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { timer } from 'rxjs';
-import { Subscription } from 'rxjs';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
-
-import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { SpinnerService } from '../../core/services/spinner.service';
-import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { MediaMatcher } from "@angular/cdk/layout";
+import { timer, Subscription } from "rxjs";
+import { MatSidenav } from "@angular/material/sidenav";
+import { Router } from "@angular/router";
+import { AuthenticationService } from "src/app/core/services/auth.service";
+import { SpinnerService } from "../../core/services/spinner.service";
+import { AuthGuard } from "src/app/core/guards/auth.guard";
 
 @Component({
-    standalone: false,
-    selector: 'app-layout',
-    templateUrl: './layout.component.html',
-    styleUrls: ['./layout.component.css']
+  standalone: false,
+  selector: "app-layout",
+  templateUrl: "./layout.component.html",
+  styleUrls: ["./layout.component.css"],
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
+  showSpinner: boolean = false;
+  userName: string = "";
+  isAdmin: boolean = false;
 
-    private _mobileQueryListener: () => void;
-    mobileQuery: MediaQueryList;
-    showSpinner: boolean = false;
-    userName: string = "";
-    isAdmin: boolean = false;
+  private autoLogoutSubscription: Subscription = new Subscription();
 
-    private autoLogoutSubscription: Subscription = new Subscription;
+  private nativeAnimation: Animation | undefined;
 
-    @ViewChild('snav') snav: MatSidenav;
+  @ViewChild("snav") snav: MatSidenav;
+  @ViewChild("menuBtn", { read: ElementRef }) menuBtn: ElementRef;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef,
-        private media: MediaMatcher,
-        public spinnerService: SpinnerService,
-        private authService: AuthenticationService,
-        private authGuard: AuthGuard,
-        private router: Router) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    public spinnerService: SpinnerService,
+    private authService: AuthenticationService,
+    private authGuard: AuthGuard,
+    private router: Router,
+  ) {
+    this.mobileQuery = this.media.matchMedia("(max-width: 1000px)");
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addEventListener("change", this._mobileQueryListener);
+  }
 
-        this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
-        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-        this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+  ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    this.isAdmin = user.isAdmin;
+    this.userName = user.fullName;
+
+    const timer$ = timer(2000, 5000);
+    this.autoLogoutSubscription = timer$.subscribe(() => {
+      this.authGuard.canActivate();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.startBlinking();
+    }, 100);
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener("change", this._mobileQueryListener);
+    this.autoLogoutSubscription.unsubscribe();
+    this.stopBlinking();
+  }
+
+  closeSidenavAndNavigate(route: string) {
+    if (this.mobileQuery.matches && this.snav) {
+      this.snav.close();
+      setTimeout(() => this.router.navigate([route]), 120);
+    } else {
+      this.router.navigate([route]);
+    }
+  }
+
+  startBlinking() {
+    if (this.nativeAnimation || !this.menuBtn) {
+      return;
     }
 
-    ngOnInit(): void {
-        const user = this.authService.getCurrentUser();
+    const element = this.menuBtn.nativeElement;
 
-        this.isAdmin = user.isAdmin;
-        this.userName = user.fullName;
+    this.nativeAnimation = element.animate(
+      [
+        { opacity: 1, offset: 0 },
+        { opacity: 0.2, offset: 0.5 },
+        { opacity: 1, offset: 1 },
+      ],
+      {
+        duration: 1500,
+        iterations: Infinity,
+      },
+    );
+  }
 
-        const timer$ = timer(2000, 5000);
-        this.autoLogoutSubscription = timer$.subscribe(() => {
-            this.authGuard.canActivate();
-        });
+  stopBlinking() {
+    if (this.nativeAnimation) {
+      this.nativeAnimation.cancel();
+      this.nativeAnimation = undefined;
     }
-
-    ngOnDestroy(): void {
-        this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
-        this.autoLogoutSubscription.unsubscribe();
-    }
-
-    ngAfterViewInit(): void {
-        this.changeDetectorRef.detectChanges();
-    }
-
-    closeSidenavAndNavigate(route: string) {
-        if (this.mobileQuery.matches && this.snav) {
-            this.snav.close();
-            setTimeout(() => this.router.navigate([route]), 120);
-        } else {
-            this.router.navigate([route]);
-        }
-    }
+  }
 }
-
