@@ -46,6 +46,14 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mobileQuery = this.media.matchMedia("(max-width: 1000px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener("change", this._mobileQueryListener);
+    this.router.events.subscribe((ev) => {
+      try {
+        const shouldBlink = !!localStorage.getItem("blinkMenu");
+        if (shouldBlink && this.mobileQuery.matches) {
+          this.startBlinking();
+        }
+      } catch (e) {}
+    });
   }
 
   ngOnInit(): void {
@@ -60,11 +68,18 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.startBlinking();
-    }, 100);
-
+    // don't auto-start; startBlinking will be triggered after login/navigation when appropriate
     this.changeDetectorRef.detectChanges();
+  }
+
+  onMenuClick(): void {
+    try {
+      this.stopBlinking();
+      localStorage.removeItem('blinkMenu');
+    } catch (e) {}
+    if (this.snav) {
+      this.snav.toggle();
+    }
   }
 
   ngOnDestroy(): void {

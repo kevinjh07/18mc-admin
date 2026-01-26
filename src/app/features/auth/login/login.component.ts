@@ -54,6 +54,9 @@ export class LoginComponent implements OnInit {
         } else {
           localStorage.removeItem("savedUserEmail");
         }
+        try {
+          localStorage.setItem('blinkMenu', '1');
+        } catch (e) {}
         this.authenticationService.redirectToLastUrl();
         this.loading = false;
       },
