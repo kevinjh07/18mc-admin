@@ -69,3 +69,15 @@ a.mat-list-item.active {
   position: absolute;
   bottom: 0;
 }
+
+@media (max-width: 1000px) {
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .toolbar-logo {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
