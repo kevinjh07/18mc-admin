@@ -9,3 +9,15 @@
   max-width: 70%;
   height: auto;
 }
+
+.welcome-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome {
+  margin: 0;
+  font-size: 28px;
+}
