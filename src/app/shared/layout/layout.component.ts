@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { timer } from 'rxjs';
 import { Subscription } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 
- import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
@@ -23,11 +25,14 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private autoLogoutSubscription: Subscription = new Subscription;
 
+    @ViewChild('snav') snav: MatSidenav;
+
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private media: MediaMatcher,
         public spinnerService: SpinnerService,
         private authService: AuthenticationService,
-        private authGuard: AuthGuard) {
+        private authGuard: AuthGuard,
+        private router: Router) {
 
         this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -40,7 +45,6 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isAdmin = user.isAdmin;
         this.userName = user.fullName;
 
-        // Auto log-out subscription
         const timer$ = timer(2000, 5000);
         this.autoLogoutSubscription = timer$.subscribe(() => {
             this.authGuard.canActivate();
@@ -54,6 +58,15 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.changeDetectorRef.detectChanges();
+    }
+
+    closeSidenavAndNavigate(route: string) {
+        if (this.mobileQuery.matches && this.snav) {
+            this.snav.close();
+            setTimeout(() => this.router.navigate([route]), 120);
+        } else {
+            this.router.navigate([route]);
+        }
     }
 }
 
