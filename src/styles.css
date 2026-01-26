@@ -162,3 +162,7 @@ p .mat-icon {
   text-overflow: ellipsis;
   max-width: 150px;
 }
+
+.header-icon {
+  color: white !important;
+}
