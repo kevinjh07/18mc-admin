@@ -25,10 +25,6 @@
   font-weight: 500;
 }
 
-.filter-card mat-card-title mat-icon {
-  color: #3f51b5;
-}
-
 .filter-actions {
   margin-top: 16px;
   padding-top: 16px;
