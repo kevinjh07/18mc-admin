@@ -9,9 +9,9 @@
         <mat-tab label="Dados da ação">
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" style="margin-top: 2%">
             <mat-form-field [fxFlex]="50">
+              <mat-label required>Título</mat-label>
               <input
                 matInput
-                placeholder="Título"
                 type="text"
                 formControlName="title"
                 maxlength="150"
@@ -23,10 +23,10 @@
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
+              <mat-label required>Data</mat-label>
               <input
                 matInput
                 [matDatepicker]="date"
-                placeholder="Data"
                 formControlName="date"
                 (click)="date.open()"
                 required
@@ -39,9 +39,9 @@
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
+              <mat-label required>Comando</mat-label>
               <mat-select
                 formControlName="commandId"
-                placeholder="Selecione o comando"
                 (selectionChange)="onCommandChange()"
                 required
               >
@@ -91,15 +91,16 @@
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="100">
+              <mat-label required>Descrição</mat-label>
               <textarea
                 matInput
-                placeholder="Descrição"
                 formControlName="description"
                 [maxLength]="1000"
                 cols="40"
                 rows="7"
               ></textarea>
               <mat-hint align="end">{{ formGroup.get('description')?.value?.length || 0 }} / 1000</mat-hint>
+              <mat-error *ngIf="formGroup.controls['description'].invalid">Campo obrigatório</mat-error>
             </mat-form-field>
           </div>
         </mat-tab>
