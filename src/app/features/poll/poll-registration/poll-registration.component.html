@@ -49,6 +49,7 @@
                   {{ command.name }}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="formGroup.controls['commandId'].invalid">Campo obrigatório</mat-error>
             </mat-form-field>
           </div>
 
