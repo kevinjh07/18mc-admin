@@ -35,7 +35,7 @@
 
             <mat-form-field fxFlex="20" fxFlex.lt-md="100">
               <mat-label>Divisão</mat-label>
-              <mat-select formControlName="divisionId">
+              <mat-select formControlName="divisionId" (selectionChange)="onDivisionChange()">
                 <mat-option *ngFor="let division of divisions" [value]="division.id">
                   {{ division.name }}
                 </mat-option>

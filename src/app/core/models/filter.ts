@@ -16,4 +16,7 @@ export class Filter {
   pollListCommandId?: number;
   pollListRegionalId?: number;
   pollListDivisionId?: number;
+  graduationReportCommandId?: number;
+  graduationReportRegionalId?: number;
+  graduationReportDivisionId?: number;
 }

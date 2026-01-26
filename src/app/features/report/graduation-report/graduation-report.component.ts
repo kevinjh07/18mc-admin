@@ -7,6 +7,7 @@ import { RegionalService } from 'src/app/core/services/regional/regional.service
 import { DivisionService } from 'src/app/core/services/division/division.service';
 import { ReportService } from 'src/app/core/services/report/report.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { FilterService } from 'src/app/core/services/filter/filter.service';
 import { Regional } from 'src/app/core/models/regional';
 import { Division } from 'src/app/core/models/division';
 import { Title } from '@angular/platform-browser';
@@ -123,6 +124,7 @@ export class GraduationReportComponent implements OnInit {
     private divisionService: DivisionService,
     private reportService: ReportService,
     private notificationService: NotificationService,
+    private filterService: FilterService,
     private titleService: Title,
     private pdfService: GraduationReportPdfService
   ) {}
@@ -151,12 +153,50 @@ export class GraduationReportComponent implements OnInit {
     this.commandService.getAll().subscribe({
       next: (commands) => {
         this.commands = commands;
+        this.restoreSavedFilters();
       },
       error: (e) => {
         this.logger.error(e);
         this.notificationService.openSnackBar('Erro ao carregar comandos');
       },
     });
+  }
+
+  private restoreSavedFilters(): void {
+    const filter = this.filterService.getFilter();
+
+    if (filter.graduationReportCommandId) {
+      this.filterForm.get('commandId')?.setValue(filter.graduationReportCommandId);
+
+      this.regionalService.getAll(1, 100, filter.graduationReportCommandId).subscribe({
+        next: (response: any) => {
+          this.regionals = response?.data || [];
+          this.filterForm.get('regionalId')?.enable();
+
+          if (filter.graduationReportRegionalId) {
+            this.filterForm.get('regionalId')?.setValue(filter.graduationReportRegionalId);
+
+            this.divisionService.getAllByRegionalId(filter.graduationReportRegionalId).subscribe({
+              next: (response: any) => {
+                this.divisions = response?.data || [];
+                this.filterForm.get('divisionId')?.enable();
+
+                if (filter.graduationReportDivisionId) {
+                  this.filterForm.get('divisionId')?.setValue(filter.graduationReportDivisionId);
+                  this.generateReport();
+                }
+              },
+              error: (e: any) => {
+                this.logger.error(e);
+              },
+            });
+          }
+        },
+        error: (e: any) => {
+          this.logger.error(e);
+        },
+      });
+    }
   }
 
   onCommandChange(): void {
@@ -169,6 +209,12 @@ export class GraduationReportComponent implements OnInit {
     this.reportGenerated = false;
 
     const commandId = this.filterForm.get('commandId')?.value;
+    this.filterService.updateFilter({
+      graduationReportCommandId: commandId,
+      graduationReportRegionalId: undefined,
+      graduationReportDivisionId: undefined,
+    });
+
     if (commandId) {
       this.blockUI.start('Carregando regionais...');
       this.regionalService.getAll(1, 100, commandId).subscribe({
@@ -193,6 +239,11 @@ export class GraduationReportComponent implements OnInit {
     this.reportGenerated = false;
 
     const regionalId = this.filterForm.get('regionalId')?.value;
+    this.filterService.updateFilter({
+      graduationReportRegionalId: regionalId,
+      graduationReportDivisionId: undefined,
+    });
+
     if (regionalId) {
       this.blockUI.start('Carregando divisões...');
       this.divisionService.getAllByRegionalId(regionalId).subscribe({
@@ -208,6 +259,12 @@ export class GraduationReportComponent implements OnInit {
         },
       });
     }
+  }
+
+  onDivisionChange(): void {
+    const divisionId = this.filterForm.get('divisionId')?.value;
+    this.filterService.updateFilter({ graduationReportDivisionId: divisionId });
+    this.reportGenerated = false;
   }
 
   generateReport(): void {
