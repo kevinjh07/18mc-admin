@@ -7,3 +7,7 @@
 .login-container mat-card-title {
     color: white;
 }
+
+.login-container .mat-mdc-icon-button {
+    color: white;
+}
