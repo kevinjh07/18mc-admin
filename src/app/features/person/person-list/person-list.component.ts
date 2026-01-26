@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -6,7 +7,6 @@ import { Title } from "@angular/platform-browser";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NGXLogger } from "ngx-logger";
 import { Division } from "src/app/core/models/division";
-import { Filter } from "src/app/core/models/filter";
 import { Regional } from "src/app/core/models/regional";
 import { CommandService } from "src/app/core/services/command/command.service";
 import { DivisionService } from "src/app/core/services/division/division.service";
@@ -29,6 +29,8 @@ export class PersonListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  isSmallScreen: boolean = false;
+
   commands: any = [];
   regionals: Regional[] = [];
   divisions: Division[] = [];
@@ -44,10 +46,12 @@ export class PersonListComponent implements OnInit {
     private regionalService: RegionalService,
     private divisionService: DivisionService,
     private filterService: FilterService,
-    private titleService: Title
+    private titleService: Title,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
+    this.observeScreenSize();
     this.titleService.setTitle("Integrantes - 18 Admin");
   }
 
@@ -70,6 +74,19 @@ export class PersonListComponent implements OnInit {
         }
       }
     }
+  }
+
+  observeScreenSize(): void {
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.XSmall])
+      .subscribe((result) => this.updateDisplayedColumns(result.matches));
+  }
+
+  updateDisplayedColumns(isSmallScreen: boolean): void {
+    this.isSmallScreen = isSmallScreen;
+    this.displayedColumns = isSmallScreen
+      ? ["shortName", "isActive", "actions"]
+      : ["shortName", "hierarchyLevel", "isActive", "actions"];
   }
 
   private setupPaginator(): void {
