@@ -8,6 +8,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { UserService } from "src/app/core/services/user/user.service";
 
 @Component({
+    standalone: false,
   selector: "app-user-registration",
   templateUrl: "./user-registration.component.html",
   styleUrls: ["./user-registration.component.css"],
@@ -148,3 +149,4 @@ export class UserRegistrationComponent implements OnInit {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 }
+

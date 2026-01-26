@@ -9,7 +9,7 @@ import { tap, catchError, map } from 'rxjs/operators';
 
 import { AuthenticationService } from '../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
- 
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

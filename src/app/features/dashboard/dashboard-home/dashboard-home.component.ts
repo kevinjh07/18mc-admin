@@ -34,6 +34,7 @@ export const DEFAULT_FORMATS = {
 };
 
 @Component({
+    standalone: false,
   selector: "app-dashboard-home",
   templateUrl: "./dashboard-home.component.html",
   styleUrls: ["./dashboard-home.component.css"],
@@ -292,3 +293,4 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 }
+

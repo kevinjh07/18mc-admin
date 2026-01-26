@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/app/core/services/spinner.service';
 
 
 @Component({
+    standalone: false,
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
@@ -73,3 +74,4 @@ export class ChangePasswordComponent implements OnInit {
       );
   }
 }
+

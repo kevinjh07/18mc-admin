@@ -31,6 +31,7 @@ export const DEFAULT_FORMATS = {
 };
 
 @Component({
+    standalone: false,
   selector: "app-social-action-registration",
   templateUrl: "./social-action-registration.component.html",
   styleUrls: ["./social-action-registration.component.css"],
@@ -230,3 +231,4 @@ export class SocialActionRegistrationComponent implements OnInit {
     });
   }
 }
+

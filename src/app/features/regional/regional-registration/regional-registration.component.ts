@@ -9,6 +9,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 
 @Component({
+    standalone: false,
   selector: "app-regional-registration",
   templateUrl: "./regional-registration.component.html",
   styleUrls: ["./regional-registration.component.css"],
@@ -112,3 +113,4 @@ export class RegionalRegistrationComponent implements OnInit {
     });
   }
 }
+

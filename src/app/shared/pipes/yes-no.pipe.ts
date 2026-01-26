@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
+  standalone: false,
   name: 'yesNo'
 })
 export class YesNoPipe implements PipeTransform {
@@ -10,3 +11,4 @@ export class YesNoPipe implements PipeTransform {
   }
 
 }
+

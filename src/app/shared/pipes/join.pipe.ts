@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
+  standalone: false,
   name: "join",
 })
 export class JoinPipe implements PipeTransform {
@@ -8,3 +9,4 @@ export class JoinPipe implements PipeTransform {
     return input?.map((i) => i[field]).join(`, `);
   }
 }
+

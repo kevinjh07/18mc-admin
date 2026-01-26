@@ -16,6 +16,7 @@ import { PersonService } from "src/app/core/services/person/person.service";
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 
 @Component({
+    standalone: false,
   selector: "app-person-list",
   templateUrl: "./person-list.component.html",
   styleUrls: ["./person-list.component.css"],
@@ -154,3 +155,4 @@ export class PersonListComponent implements OnInit {
     });
   }
 }
+

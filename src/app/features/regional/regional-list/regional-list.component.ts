@@ -10,6 +10,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 
 @Component({
+    standalone: false,
   selector: "app-regional-list",
   templateUrl: "./regional-list.component.html",
   styleUrls: ["./regional-list.component.css"],
@@ -73,3 +74,4 @@ export class RegionalListComponent implements OnInit {
     });
   }
 }
+

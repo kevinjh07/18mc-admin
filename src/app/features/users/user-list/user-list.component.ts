@@ -10,6 +10,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { UserService } from "src/app/core/services/user/user.service";
 
 @Component({
+    standalone: false,
   selector: "app-user-list",
   templateUrl: "./user-list.component.html",
   styleUrls: ["./user-list.component.css"],
@@ -60,3 +61,4 @@ export class UserListComponent implements OnInit {
     });
   }
 }
+

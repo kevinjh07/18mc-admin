@@ -8,6 +8,7 @@ import { NGXLogger } from 'ngx-logger';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
+    standalone: false,
   selector: 'app-person-late-payment-dialog',
   templateUrl: './person-late-payment-dialog.component.html',
   styleUrls: ['./person-late-payment-dialog.component.css']
@@ -127,3 +128,4 @@ export class PersonLatePaymentDialogComponent implements OnInit {
     return monthObj ? monthObj.name : '';
   }
 }
+

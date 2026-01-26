@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+    standalone: false,
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
   styleUrls: ['./account-page.component.css']
@@ -15,3 +16,4 @@ export class AccountPageComponent implements OnInit {
   }
 
 }
+

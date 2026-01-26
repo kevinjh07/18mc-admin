@@ -31,6 +31,7 @@ export const DEFAULT_FORMATS = {
 };
 
 @Component({
+    standalone: false,
   selector: "app-poll-registration",
   templateUrl: "./poll-registration.component.html",
   styleUrls: ["./poll-registration.component.css"],
@@ -229,3 +230,4 @@ export class PollRegistrationComponent implements OnInit {
     });
   }
 }
+

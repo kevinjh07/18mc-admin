@@ -137,6 +137,7 @@
   font-size: 28px;
   font-weight: 600;
   color: #ccc;
+  text-align: center;
 }
 
 /* Legend Card */
@@ -375,20 +376,33 @@
   border-radius: 3px;
 }
 
-.total-score-cell mat-progress-bar.total-excellent ::ng-deep .mat-progress-bar-fill::after {
-  background-color: #4caf50;
+/* Angular Material 17 MDC progress bar styles */
+.total-score-cell mat-progress-bar.total-excellent ::ng-deep .mdc-linear-progress__bar-inner {
+  border-color: #4caf50;
+}
+.total-score-cell mat-progress-bar.total-excellent ::ng-deep .mdc-linear-progress__buffer-bar {
+  background-color: rgba(76, 175, 80, 0.25);
 }
 
-.total-score-cell mat-progress-bar.total-good ::ng-deep .mat-progress-bar-fill::after {
-  background-color: #8bc34a;
+.total-score-cell mat-progress-bar.total-good ::ng-deep .mdc-linear-progress__bar-inner {
+  border-color: #8bc34a;
+}
+.total-score-cell mat-progress-bar.total-good ::ng-deep .mdc-linear-progress__buffer-bar {
+  background-color: rgba(139, 195, 74, 0.25);
 }
 
-.total-score-cell mat-progress-bar.total-average ::ng-deep .mat-progress-bar-fill::after {
-  background-color: #ff9800;
+.total-score-cell mat-progress-bar.total-average ::ng-deep .mdc-linear-progress__bar-inner {
+  border-color: #ff9800;
+}
+.total-score-cell mat-progress-bar.total-average ::ng-deep .mdc-linear-progress__buffer-bar {
+  background-color: rgba(255, 152, 0, 0.25);
 }
 
-.total-score-cell mat-progress-bar.total-low ::ng-deep .mat-progress-bar-fill::after {
-  background-color: #f44336;
+.total-score-cell mat-progress-bar.total-low ::ng-deep .mdc-linear-progress__bar-inner {
+  border-color: #f44336;
+}
+.total-score-cell mat-progress-bar.total-low ::ng-deep .mdc-linear-progress__buffer-bar {
+  background-color: rgba(244, 67, 54, 0.25);
 }
 
 /* Vote Column */
@@ -818,7 +832,8 @@
   }
 
   .total-score-cell mat-progress-bar {
-    display: none;
+    display: block;
+    height: 4px;
   }
 
   /* Detail Row Mobile */

@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
+    standalone: false,
   selector: 'app-password-reset-request',
   templateUrl: './password-reset-request.component.html',
   styleUrls: ['./password-reset-request.component.css']
@@ -59,3 +60,4 @@ export class PasswordResetRequestComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 }
+

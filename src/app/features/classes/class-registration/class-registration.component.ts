@@ -9,6 +9,7 @@ import { ClassService } from "src/app/core/services/class/class.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 
 @Component({
+    standalone: false,
   selector: "app-class-registration",
   templateUrl: "./class-registration.component.html",
   styleUrls: ["./class-registration.component.css"],
@@ -98,3 +99,4 @@ export class ClassRegistrationComponent implements OnInit {
     });
   }
 }
+

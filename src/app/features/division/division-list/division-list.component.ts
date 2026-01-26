@@ -13,6 +13,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { RegionalService } from "src/app/core/services/regional/regional.service";
 
 @Component({
+    standalone: false,
   selector: "app-division-list",
   templateUrl: "./division-list.component.html",
   styleUrls: ["./division-list.component.css"],
@@ -119,3 +120,4 @@ export class DivisionListComponent implements OnInit {
     });
   }
 }
+

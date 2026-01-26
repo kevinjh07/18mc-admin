@@ -24,6 +24,7 @@ export const DEFAULT_FORMATS = {
 };
 
 @Component({
+    standalone: false,
   selector: "app-report-list",
   templateUrl: "./report-list.component.html",
   styleUrls: ["./report-list.component.css"],
@@ -141,3 +142,4 @@ export class ReportListComponent implements OnInit {
     });
   }
 }
+
