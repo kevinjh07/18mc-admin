@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -29,10 +30,12 @@ export class UserListComponent implements OnInit {
     private logger: NGXLogger,
     private notificationService: NotificationService,
     private titleService: Title,
-    private userService: UserService
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit() {
+    this.observeScreenSize();
     this.titleService.setTitle("Usuários - 18 Admin");
     this.logger.log("Users loaded");
   }
@@ -40,6 +43,19 @@ export class UserListComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.getUsers();
+  }
+
+  observeScreenSize(): void {
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.XSmall])
+      .subscribe((result) => this.updateDisplayedColumns(result.matches));
+  }
+
+  updateDisplayedColumns(isSmallScreen: boolean): void {
+    this.isSmallScreen = isSmallScreen;
+    this.displayedColumns = isSmallScreen
+      ? ["email", "active", "actions"]
+      : ["email", "name", "active", "actions"];
   }
 
   getUsers() {
