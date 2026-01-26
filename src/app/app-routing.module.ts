@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { AuthGuard } from "./core/guards/auth.guard";
+import { HomeComponent } from './features/home/home.component';
+import { LayoutComponent } from './shared/layout/layout.component';
 
 const appRoutes: Routes = [
   {
@@ -54,13 +56,16 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "",
-    redirectTo: "social-action",
-    pathMatch: "full",
+    path: '',
+    component: LayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: HomeComponent }
+    ]
   },
   {
     path: "**",
-    redirectTo: "social-action",
+    redirectTo: "",
   },
 ];
 
