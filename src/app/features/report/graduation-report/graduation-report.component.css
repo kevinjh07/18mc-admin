@@ -4,7 +4,6 @@
 
 /* Header */
 .header-section {
-  margin-bottom: 24px;
   padding: 20px;
 }
 
@@ -845,4 +844,8 @@
   .event-type-card {
     min-width: 100%;
   }
+}
+
+mat-card-header {
+  padding-top: 0%;
 }
