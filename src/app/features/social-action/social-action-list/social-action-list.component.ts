@@ -91,6 +91,10 @@ export class SocialActionListComponent implements OnInit {
   }
 
   getSocialActions() {
+    if (!this.selectedDivisionId) {
+      return;
+    }
+
     this.filterService.updateFilter({ socialActionListDivisionId: this.selectedDivisionId });
 
     this.blockUI.start("Aguarde...");

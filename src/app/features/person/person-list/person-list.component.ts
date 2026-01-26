@@ -77,6 +77,10 @@ export class PersonListComponent implements OnInit {
   }
 
   getPersons() {
+    if (!this.selectedDivisionId) {
+      return;
+    }
+
     this.filterService.updateFilter({ personListDivisionId: this.selectedDivisionId });
 
     this.blockUI.start("Aguarde...");

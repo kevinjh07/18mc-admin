@@ -91,6 +91,10 @@ export class EventListComponent implements OnInit {
   }
 
   getEvents() {
+    if (!this.selectedDivisionId) {
+      return;
+    }
+
     this.filterService.updateFilter({ eventListDivisionId: this.selectedDivisionId });
 
     this.blockUI.start("Aguarde...");

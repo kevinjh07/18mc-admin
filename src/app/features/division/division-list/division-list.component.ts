@@ -60,6 +60,10 @@ export class DivisionListComponent implements OnInit {
   }
 
   getDivisions() {
+    if (!this.selectedRegionalId) {
+      return;
+    }
+
     this.filterService.updateFilter({ divisionListRegionalId: this.selectedRegionalId });
 
     this.blockUI.start("Aguarde...");

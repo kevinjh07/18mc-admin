@@ -91,6 +91,10 @@ export class PollListComponent implements OnInit {
   }
 
   getPolls() {
+    if (!this.selectedDivisionId) {
+      return;
+    }
+
     this.filterService.updateFilter({ pollListDivisionId: this.selectedDivisionId });
 
     this.blockUI.start("Aguarde...");

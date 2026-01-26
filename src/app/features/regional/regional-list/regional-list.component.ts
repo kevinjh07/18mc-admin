@@ -55,6 +55,10 @@ export class RegionalListComponent implements OnInit {
   }
 
   getRegionals() {
+    if (!this.selectedCommandId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
     this.regionalService.getAll(this.paginator.pageIndex + 1, this.paginator.pageSize, this.selectedCommandId).subscribe({
       next: (response: any) => {
