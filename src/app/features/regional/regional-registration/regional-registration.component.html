@@ -1,4 +1,7 @@
 <mat-toolbar>
+  <button mat-mini-fab color="primary" style="margin-right: 12px;" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   {{ regional.id == null ? "Cadastrar Regional" : "Editar Regional" }}
 </mat-toolbar>
 

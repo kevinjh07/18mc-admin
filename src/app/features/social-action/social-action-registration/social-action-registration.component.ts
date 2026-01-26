@@ -264,5 +264,9 @@ export class SocialActionRegistrationComponent implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

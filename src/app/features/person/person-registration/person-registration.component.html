@@ -1,8 +1,11 @@
 <mat-toolbar>
+  <button mat-mini-fab color="primary" style="margin-right: 12px;" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   {{ person.id == null ? "Cadastrar Integrante" : "Editar Integrante" }}
-  <button mat-flat-button *ngIf="person.id" style="margin-left: 1%" (click)="openLatePaymentDialog()" matTooltip="Gerenciar Pagamentos">
+  <button mat-flat-button *ngIf="person.id" color="primary" style="margin-left: 3%" (click)="openLatePaymentDialog()" matTooltip="Gerenciar Pagamentos">
     <mat-icon>attach_money</mat-icon>
-    Lançar Atraso Mensalidade
+      Mensalidade
   </button>
   <span class="spacer"></span>
 </mat-toolbar>

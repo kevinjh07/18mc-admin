@@ -1,3 +1,6 @@
+  goBack() {
+    window.history.back();
+  }
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";

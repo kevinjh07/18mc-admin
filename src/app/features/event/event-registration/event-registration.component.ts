@@ -261,5 +261,9 @@ export class EventRegistrationComponent implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

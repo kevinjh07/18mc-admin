@@ -164,5 +164,9 @@ export class UserRegistrationComponent implements OnInit {
   toggleConfirmPasswordVisibility() {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

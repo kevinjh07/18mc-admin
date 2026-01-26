@@ -120,5 +120,9 @@ export class RegionalRegistrationComponent implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 

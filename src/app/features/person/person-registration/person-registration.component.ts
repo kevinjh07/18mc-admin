@@ -227,5 +227,9 @@ export class PersonRegistrationComponent implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
 
