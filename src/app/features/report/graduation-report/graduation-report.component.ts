@@ -130,9 +130,11 @@ export class GraduationReportComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Relatório de Graduação - 18 Admin');
 
-    const currentYear = new Date().getFullYear();
-    const startDate = new Date(currentYear, 0, 1);
-    const endDate = new Date(currentYear, 11, 31);
+    const today = new Date();
+    const sixMonthsAgo = new Date(today);
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 4);
+    const startDate = sixMonthsAgo;
+    const endDate = today;
 
     this.filterForm = this.fb.group({
       commandId: [null, Validators.required],
