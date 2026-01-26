@@ -68,7 +68,6 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // don't auto-start; startBlinking will be triggered after login/navigation when appropriate
     this.changeDetectorRef.detectChanges();
   }
 
@@ -111,7 +110,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         { opacity: 1, offset: 1 },
       ],
       {
-        duration: 1500,
+        duration: 1200,
         iterations: Infinity,
       },
     );
