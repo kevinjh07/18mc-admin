@@ -76,6 +76,11 @@ export class UserRegistrationComponent implements OnInit {
       .subscribe({
         next: (response: User) => {
           this.user = response;
+          this.formGroup.patchValue({
+            name: this.user.name,
+            email: this.user.email,
+            isActive: this.user.isActive
+          });
         },
         error: (e) => {
           this.logger.error(e);
@@ -89,6 +94,17 @@ export class UserRegistrationComponent implements OnInit {
     if (this.formGroup.invalid) {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios");
       return;
+    }
+
+    // Atualizar user com valores do formulário
+    const formValues = this.formGroup.value;
+    this.user.name = formValues.name;
+    this.user.email = formValues.email;
+    if (!this.isEditMode) {
+      this.user.password = formValues.password;
+    }
+    if (this.isEditMode) {
+      this.user.isActive = formValues.isActive;
     }
 
     if (this.isEditMode) {

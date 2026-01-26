@@ -62,6 +62,10 @@ export class RegionalRegistrationComponent implements OnInit {
       next: (response: any) => {
         this.blockUI.stop();
         this.regional = response;
+        this.formGroup.patchValue({
+          name: this.regional.name,
+          commandId: this.regional.commandId
+        });
       },
       error: (e) => {
         this.logger.error(e);
@@ -76,6 +80,10 @@ export class RegionalRegistrationComponent implements OnInit {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios!");
       return;
     }
+
+    const formValues = this.formGroup.value;
+    this.regional.name = formValues.name;
+    this.regional.commandId = formValues.commandId;
 
     if (this.regional.id) {
       this.update();

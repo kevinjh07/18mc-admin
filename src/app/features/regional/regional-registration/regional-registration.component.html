@@ -12,7 +12,6 @@
             placeholder="Nome"
             type="text"
             formControlName="name"
-            [(ngModel)]="regional.name"
             maxlength="150"
             required
           />
@@ -22,7 +21,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="25">
             <mat-label>Comando</mat-label>
-            <mat-select formControlName="commandId" [(ngModel)]="regional.commandId" required>
+            <mat-select formControlName="commandId" required>
               <mat-option *ngFor="let command of commands" [value]="command.id">{{ command.name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="formGroup.controls['commandId'].invalid">Campo obrigatório</mat-error>

@@ -112,6 +112,16 @@ export class PollRegistrationComponent implements OnInit {
         this.poll.regionalId = response.Division.Regional.id;
         this.poll.divisionId = response.Division.id;
         this.selectedPerson = response.People || [];
+
+        this.formGroup.patchValue({
+          title: this.poll.title,
+          date: this.poll.date,
+          description: this.poll.description,
+          commandId: this.selectedCommandId,
+          regionalId: this.poll.regionalId,
+          divisionId: this.poll.divisionId
+        });
+
         this.getPersons();
       },
       error: (e) => {
@@ -127,6 +137,12 @@ export class PollRegistrationComponent implements OnInit {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios!");
       return;
     }
+
+    const formValues = this.formGroup.value;
+    this.poll.title = formValues.title;
+    this.poll.date = formValues.date;
+    this.poll.description = formValues.description;
+    this.poll.divisionId = formValues.divisionId;
 
     this.poll.eventType = EventType.POLL;
 
@@ -182,6 +198,7 @@ export class PollRegistrationComponent implements OnInit {
   }
 
   getRegionals() {
+    this.selectedCommandId = this.formGroup.get('commandId')?.value || this.selectedCommandId;
     if (!this.selectedCommandId) {
       return;
     }
@@ -201,9 +218,24 @@ export class PollRegistrationComponent implements OnInit {
     });
   }
 
+  onCommandChange() {
+    this.formGroup.patchValue({ regionalId: '', divisionId: '' });
+    this.getRegionals();
+  }
+
+  onRegionalChange() {
+    this.formGroup.patchValue({ divisionId: '' });
+    this.getDivisions();
+  }
+
   getDivisions() {
+    const regionalId = this.formGroup.get('regionalId')?.value || this.poll.regionalId;
+    if (!regionalId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
-    this.divisionService.getAllByRegionalId(this.poll.regionalId).subscribe({
+    this.divisionService.getAllByRegionalId(regionalId).subscribe({
       next: (response: any) => {
         this.blockUI.stop();
         this.divisions = response?.data || [];

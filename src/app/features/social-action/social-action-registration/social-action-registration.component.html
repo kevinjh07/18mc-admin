@@ -14,7 +14,6 @@
                 placeholder="Título"
                 type="text"
                 formControlName="title"
-                [(ngModel)]="socialAction.title"
                 maxlength="150"
                 required
               />
@@ -29,7 +28,6 @@
                 [matDatepicker]="date"
                 placeholder="Data"
                 formControlName="date"
-                [(ngModel)]="socialAction.date"
                 (click)="date.open()"
                 required
               />
@@ -44,8 +42,7 @@
               <mat-select
                 formControlName="commandId"
                 placeholder="Selecione o comando"
-                (selectionChange)="getRegionals(); socialAction.regionalId = 0; socialAction.divisionId = 0"
-                [(ngModel)]="selectedCommandId"
+                (selectionChange)="onCommandChange()"
                 required
               >
                 <mat-option *ngFor="let command of commands" [value]="command.id">
@@ -60,8 +57,7 @@
               <mat-label>Regional</mat-label>
               <mat-select
                 formControlName="regionalId"
-                [(ngModel)]="socialAction.regionalId"
-                (selectionChange)="getDivisions()"
+                (selectionChange)="onRegionalChange()"
                 required
               >
                 <mat-option *ngFor="let regional of regionals" [value]="regional.id">{{ regional.name }}</mat-option>
@@ -73,7 +69,7 @@
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
               <mat-label>Divisão</mat-label>
-              <mat-select formControlName="divisionId" [(ngModel)]="socialAction.divisionId" required>
+              <mat-select formControlName="divisionId" required>
                 <mat-option *ngFor="let division of divisions" [value]="division.id">{{ division.name }}</mat-option>
               </mat-select>
               <mat-error *ngIf="formGroup.controls['divisionId'].invalid">Campo obrigatório</mat-error>
@@ -83,7 +79,7 @@
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
               <mat-label>Tipo da Ação Social</mat-label>
-              <mat-select formControlName="actionType" [(ngModel)]="socialAction.actionType" required>
+              <mat-select formControlName="actionType" required>
                 <mat-option value="internal">Interna</mat-option>
                 <mat-option value="external">Externa</mat-option>
                 <mat-option value="fundraising">Arrecadação</mat-option>
@@ -98,12 +94,11 @@
                 matInput
                 placeholder="Descrição"
                 formControlName="description"
-                [(ngModel)]="socialAction.description"
                 [maxLength]="1000"
                 cols="40"
                 rows="7"
               ></textarea>
-              <mat-hint align="end">{{ socialAction.description.length }} / 1000</mat-hint>
+              <mat-hint align="end">{{ formGroup.get('description')?.value?.length || 0 }} / 1000</mat-hint>
             </mat-form-field>
           </div>
         </mat-tab>

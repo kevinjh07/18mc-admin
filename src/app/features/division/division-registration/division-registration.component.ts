@@ -60,6 +60,13 @@ export class DivisionRegistrationComponent implements OnInit {
         this.blockUI.stop();
         this.division = response;
         this.selectedCommandId = response.Regional.commandId;
+
+        this.formGroup.patchValue({
+          name: this.division.name,
+          commandId: this.selectedCommandId,
+          regionalId: this.division.regionalId
+        });
+
         this.getRegionals();
       },
       error: (e) => {
@@ -75,6 +82,10 @@ export class DivisionRegistrationComponent implements OnInit {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios!");
       return;
     }
+
+    const formValues = this.formGroup.value;
+    this.division.name = formValues.name;
+    this.division.regionalId = formValues.regionalId;
 
     if (this.division.id) {
       this.update();
@@ -126,6 +137,7 @@ export class DivisionRegistrationComponent implements OnInit {
   }
 
   getRegionals() {
+    this.selectedCommandId = this.formGroup.get('commandId')?.value || this.selectedCommandId;
     if (!this.selectedCommandId) {
       return;
     }
@@ -142,6 +154,11 @@ export class DivisionRegistrationComponent implements OnInit {
         this.notificationService.openSnackBar("Erro ao carregar lista de regionais");
       },
     });
+  }
+
+  onCommandChange() {
+    this.formGroup.patchValue({ regionalId: '' });
+    this.getRegionals();
   }
 }
 

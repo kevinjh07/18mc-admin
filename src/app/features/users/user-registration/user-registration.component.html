@@ -7,7 +7,7 @@
         <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
             <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
                 <mat-form-field [fxFlex]="50">
-                    <input matInput placeholder="Nome" type="text" formControlName="name" [(ngModel)]="user.name"
+                    <input matInput placeholder="Nome" type="text" formControlName="name"
                         maxlength="150" required />
                     <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
                 </mat-form-field>
@@ -15,7 +15,7 @@
 
             <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
                 <mat-form-field [fxFlex]="50">
-                    <input matInput placeholder="E-mail" type="email" formControlName="email" [(ngModel)]="user.email"
+                    <input matInput placeholder="E-mail" type="email" formControlName="email"
                         maxlength="150" required />
                     <mat-error *ngIf="formGroup.controls['email'].invalid">Campo obrigatório</mat-error>
                 </mat-form-field>
@@ -24,7 +24,7 @@
             <div *ngIf="!isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
                 <mat-form-field [fxFlex]="50">
                     <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Senha"
-                        formControlName="password" [(ngModel)]="user.password" maxlength="150" required />
+                        formControlName="password" maxlength="150" required />
                     <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
                         <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
                     </button>
@@ -58,7 +58,7 @@
 
             <div *ngIf="isEditMode" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
                 <mat-form-field [fxFlex]="50">
-                    <mat-select placeholder="Situação" formControlName="isActive" [(ngModel)]="user.isActive" required
+                    <mat-select placeholder="Situação" formControlName="isActive" required
                         [compareWith]="compareWith">
                         <mat-option [value]="true">Ativo</mat-option>
                         <mat-option [value]="false">Inativo</mat-option>

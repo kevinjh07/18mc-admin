@@ -73,6 +73,17 @@ export class PersonRegistrationComponent implements OnInit {
         this.person = response;
         this.selectedCommandId = response.Division.Regional.commandId;
         this.selectedRegionalId = response.Division.Regional.id;
+
+        this.formGroup.patchValue({
+          fullName: this.person.fullName,
+          shortName: this.person.shortName,
+          hierarchyLevel: this.person.hierarchyLevel,
+          commandId: this.selectedCommandId,
+          regionalId: this.selectedRegionalId,
+          divisionId: this.person.divisionId,
+          isActive: this.person.isActive
+        });
+
         this.getDivisions();
       },
       error: (e) => {
@@ -88,6 +99,13 @@ export class PersonRegistrationComponent implements OnInit {
       this.notificationService.openSnackBar("Preencha os campos obrigatórios!");
       return;
     }
+
+    const formValues = this.formGroup.value;
+    this.person.fullName = formValues.fullName;
+    this.person.shortName = formValues.shortName;
+    this.person.hierarchyLevel = formValues.hierarchyLevel;
+    this.person.divisionId = formValues.divisionId;
+    this.person.isActive = formValues.isActive;
 
     if (this.person.id) {
       this.update();
@@ -134,6 +152,7 @@ export class PersonRegistrationComponent implements OnInit {
   }
 
   getRegionals() {
+    this.selectedCommandId = this.formGroup.get('commandId')?.value;
     if (!this.selectedCommandId) {
       return;
     }
@@ -153,7 +172,24 @@ export class PersonRegistrationComponent implements OnInit {
     });
   }
 
+  onCommandChange() {
+    this.formGroup.patchValue({ regionalId: '', divisionId: '' });
+    this.selectedRegionalId = 0;
+    this.getRegionals();
+  }
+
+  onRegionalChange() {
+    this.selectedRegionalId = this.formGroup.get('regionalId')?.value;
+    this.formGroup.patchValue({ divisionId: '' });
+    this.getDivisions();
+  }
+
   getDivisions() {
+    this.selectedRegionalId = this.formGroup.get('regionalId')?.value || this.selectedRegionalId;
+    if (!this.selectedRegionalId) {
+      return;
+    }
+
     this.blockUI.start("Aguarde...");
     this.divisionService.getAllByRegionalId(this.selectedRegionalId).subscribe({
       next: (response: any) => {

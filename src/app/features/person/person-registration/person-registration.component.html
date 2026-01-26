@@ -12,7 +12,7 @@
     <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
-          <input matInput placeholder="Nome" type="text" formControlName="fullName" [(ngModel)]="person.fullName"
+          <input matInput placeholder="Nome" type="text" formControlName="fullName"
             maxlength="150" required />
           <mat-error *ngIf="formGroup.controls['fullName'].invalid">Campo obrigatório</mat-error>
         </mat-form-field>
@@ -21,7 +21,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
           <input matInput placeholder="Nome Colete" type="text" formControlName="shortName"
-            [(ngModel)]="person.shortName" maxlength="100" required />
+            maxlength="100" required />
           <mat-error *ngIf="formGroup.controls['shortName'].invalid">Campo obrigatório</mat-error>
         </mat-form-field>
       </div>
@@ -29,7 +29,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
           <mat-label>Grau Hierárquico</mat-label>
-          <mat-select formControlName="hierarchyLevel" [(ngModel)]="person.hierarchyLevel" required>
+          <mat-select formControlName="hierarchyLevel" required>
             <mat-option value="XI: Camiseta">XI: Camiseta</mat-option>
             <mat-option value="X: PP">X: PP</mat-option>
             <mat-option value="IX: Meio Colete">IX: Meio Colete</mat-option>
@@ -49,8 +49,7 @@
           <mat-select
             formControlName="commandId"
             placeholder="Selecione o comando"
-            (selectionChange)="getRegionals(); selectedRegionalId = 0; person.divisionId = 0"
-            [(ngModel)]="selectedCommandId"
+            (selectionChange)="onCommandChange()"
           >
             <mat-option *ngFor="let command of commands" [value]="command.id">
               {{ command.name }}
@@ -62,7 +61,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
           <mat-label>Regional</mat-label>
-          <mat-select formControlName="regionalId" [(ngModel)]="selectedRegionalId" (selectionChange)="getDivisions()"
+          <mat-select formControlName="regionalId" (selectionChange)="onRegionalChange()"
             required>
             <mat-option *ngFor="let regional of regionals" [value]="regional.id">{{ regional.name }}</mat-option>
           </mat-select>
@@ -73,7 +72,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
           <mat-label>Divisão</mat-label>
-          <mat-select formControlName="divisionId" [(ngModel)]="person.divisionId" required>
+          <mat-select formControlName="divisionId" required>
             <mat-option *ngFor="let division of divisions" [value]="division.id">{{ division.name }}</mat-option>
           </mat-select>
           <mat-error *ngIf="formGroup.controls['divisionId'].invalid">Campo obrigatório</mat-error>
@@ -83,7 +82,7 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
         <mat-form-field [fxFlex]="50">
           <mat-label>Situação</mat-label>
-          <mat-select formControlName="isActive" [(ngModel)]="person.isActive" required>
+          <mat-select formControlName="isActive" required>
             <mat-option [value]="true">Ativo</mat-option>
             <mat-option [value]="false">Inativo</mat-option>
           </mat-select>
