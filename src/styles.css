@@ -20,6 +20,10 @@
   margin-top: 2%;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
 .mt-15 {
   margin-top: 15px;
 }
@@ -41,7 +45,6 @@
 .mb-5pct {
   margin-bottom: 5%;
 }
-/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 
 body {
   margin: 0;
