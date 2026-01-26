@@ -16,15 +16,16 @@
         <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
-              <input matInput placeholder="Nome" type="text" formControlName="name" maxlength="150" required />
+              <mat-label required>Nome</mat-label>
+              <input matInput type="text" formControlName="name" maxlength="150" required />
               <mat-error *ngIf="formGroup.controls['name'].invalid">Campo obrigatório</mat-error>
             </mat-form-field>
           </div>
 
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="50">
-              <mat-select formControlName="commandId" placeholder="Selecione o comando"
-                (selectionChange)="onCommandChange()" required>
+              <mat-label required>Comando</mat-label>
+              <mat-select formControlName="commandId" (selectionChange)="onCommandChange()" required>
                 <mat-option *ngFor="let command of commands" [value]="command.id">
                   {{ command.name }}
                 </mat-option>

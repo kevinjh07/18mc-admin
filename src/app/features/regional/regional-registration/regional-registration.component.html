@@ -16,9 +16,9 @@
         <form class="mt-10" [formGroup]="formGroup" (ngSubmit)="save()">
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
             <mat-form-field [fxFlex]="25">
+              <mat-label required>Nome</mat-label>
               <input
                 matInput
-                placeholder="Nome"
                 type="text"
                 formControlName="name"
                 maxlength="150"
