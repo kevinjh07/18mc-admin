@@ -39,41 +39,49 @@
           <mat-icon matListItemIcon>group</mat-icon>
           <span matListItemTitle>Usuários</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a mat-list-item (click)="closeSidenavAndNavigate('/social-action')" routerLinkActive="active">
           <mat-icon matListItemIcon>diversity_3</mat-icon>
           <span matListItemTitle>Ações Sociais</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a mat-list-item (click)="closeSidenavAndNavigate('/event')" routerLinkActive="active">
           <mat-icon matListItemIcon>event</mat-icon>
           <span matListItemTitle>Eventos</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a mat-list-item (click)="closeSidenavAndNavigate('/poll')" routerLinkActive="active">
           <mat-icon matListItemIcon>poll</mat-icon>
           <span matListItemTitle>Enquetes</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a [role]="['admin']" mat-list-item (click)="closeSidenavAndNavigate('/regional')" routerLinkActive="active">
           <mat-icon matListItemIcon>apps</mat-icon>
           <span matListItemTitle>Regionais</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a [role]="['admin']" mat-list-item (click)="closeSidenavAndNavigate('/division')" routerLinkActive="active">
           <mat-icon matListItemIcon>safety_divider</mat-icon>
           <span matListItemTitle>Divisões</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a mat-list-item (click)="closeSidenavAndNavigate('/person')" routerLinkActive="active">
           <mat-icon matListItemIcon>group</mat-icon>
           <span matListItemTitle>Integrantes</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a [role]="['admin']" mat-list-item (click)="closeSidenavAndNavigate('/report/graduation')" routerLinkActive="active">
           <mat-icon matListItemIcon>school</mat-icon>
           <span matListItemTitle>Relatório de Graduação</span>
         </a>
+        <mat-divider></mat-divider>
 
         <a mat-list-item (click)="closeSidenavAndNavigate('/auth/login')">
           <mat-icon matListItemIcon>exit_to_app</mat-icon>
