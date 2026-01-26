@@ -17,7 +17,7 @@ import { UserService } from "src/app/core/services/user/user.service";
 })
 export class UserListComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
-  displayedColumns: string[] = ["email", "active", "actions"];
+  displayedColumns: string[] = ["email", "name", "active", "actions"];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatSort, { static: true }) sort: MatSort = new MatSort();
