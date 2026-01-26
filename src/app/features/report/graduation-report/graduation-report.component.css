@@ -5,6 +5,7 @@
 /* Header */
 .header-section {
   margin-bottom: 24px;
+  padding: 20px;
 }
 
 .header-icon {
@@ -437,15 +438,6 @@
 
 .vote-active mat-icon {
   color: #4caf50 !important;
-}
-
-/* Highlight Row */
-.highlight-row {
-  background: linear-gradient(90deg, rgba(76, 175, 80, 0.08) 0%, rgba(76, 175, 80, 0.02) 100%);
-}
-
-.highlight-row:hover {
-  background: linear-gradient(90deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.05) 100%) !important;
 }
 
 /* Expandable Row Styles */

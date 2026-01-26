@@ -270,10 +270,10 @@ export class GraduationReportComponent implements OnInit {
     return (score / 4) * 100;
   }
 
-  toggleVote(personId: number): void {
+  toggleVote(personId: number, totalScore: number): void {
     if (this.directorVotes.has(personId)) {
       this.directorVotes.delete(personId);
-    } else {
+    } else if (totalScore === 2) {
       this.directorVotes.set(personId, 1);
     }
   }
